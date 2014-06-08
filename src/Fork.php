@@ -22,7 +22,6 @@ class Fork {
 
         if($pid == -1) {
             throw new \Exception("Failed to fork");
-            return false;
         }
 
         # If this is the child process, then run the requested function
