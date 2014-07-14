@@ -18,7 +18,7 @@ Public Properties
 Examples
 --------
 
-```
+```php
 $fork = new \duncan3dc\Helpers\Fork;
 
 $fork->call(function() {
