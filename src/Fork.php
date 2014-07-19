@@ -2,22 +2,21 @@
 
 namespace duncan3dc\Helpers;
 
-class Fork {
-
+class Fork
+{
     private $threads;
     public  $ignoreErrors;
 
 
-    public function __construct() {
-
+    public function __construct()
+    {
         $this->threads = [];
         $this->ignoreErrors = false;
-
     }
 
 
-    public function call($func) {
-
+    public function call($func)
+    {
         $pid = pcntl_fork();
 
         if($pid == -1) {
@@ -35,21 +34,20 @@ class Fork {
         $this->threads[$pid] = $pid;
 
         return $pid;
-
     }
 
 
-    public function wait($pid=false) {
-
+    public function wait($pid = false)
+    {
         if($pid) {
-            $threads = array($pid);
+            $threads = [$pid];
         } else {
             $threads = $this->threads;
         }
 
         $error = false;
         foreach($threads as $pid) {
-            pcntl_waitpid($pid,$status);
+            pcntl_waitpid($pid, $status);
             if($status > 0) {
                 $error = $status;
             }
@@ -61,15 +59,11 @@ class Fork {
         }
 
         return $status;
-
     }
 
 
-    public function __destruct() {
-
+    public function __destruct()
+    {
         $this->wait();
-
     }
-
-
 }
