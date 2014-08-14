@@ -13,6 +13,7 @@
     }],
     "require": {
         "ext-pcntl": "*",
+        "ext-shmop": "*",
         "php": ">=5.4.0"
     },
     "autoload": {
