@@ -18,7 +18,7 @@ class Fork
     }
 
 
-    public function call($func)
+    public function call($func, $args = null)
     {
         $pid = pcntl_fork();
 
@@ -29,7 +29,11 @@ class Fork
         # If this is the child process, then run the requested function
         if (!$pid) {
             try {
-                $func();
+                if ($args === null) {
+                    $func();
+                } else {
+                    call_user_func($func, $args);
+                }
             } catch(\Exception $e) {
                 $memory = shmop_open($this->memoryKey, "c", 0644, static::SHARED_MEMORY_LIMIT);
                 $errors = shmop_read($memory, 0, static::SHARED_MEMORY_LIMIT);
