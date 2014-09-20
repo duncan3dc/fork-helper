@@ -4,7 +4,7 @@ namespace duncan3dc\Helpers;
 
 class ForkTest extends \PHPUnit_Framework_TestCase
 {
-    public function testMain()
+    public function testOutput()
     {
         $output = "";
         $memoryKey = round(microtime(true) * 1000);
@@ -48,5 +48,43 @@ class ForkTest extends \PHPUnit_Framework_TestCase
         shmop_close($memory);
 
         $this->assertSame("func1.1\nfunc2.1\nwaiting\nfunc1.2\nfunc2.2\nend", $output);
+    }
+
+
+    public function testException()
+    {
+        $fork = new Fork;
+        $fork->call(function() {
+            throw new \Exception("Test");
+        });
+
+        $exception = "";
+        try {
+            $fork->wait();
+        } catch(\Exception $e) {
+            $exception = $e->getMessage();
+            $exception = explode("\n", $exception)[0];
+        }
+
+        $this->assertSame("An error occurred within a thread, the return code was (256)", $exception);
+    }
+
+
+    public function testIgnoreErrors()
+    {
+        $fork = new Fork;
+        $fork->ignoreErrors = true;
+        $fork->call(function() {
+            throw new \Exception("Test");
+        });
+
+        $exception = "";
+        try {
+            $fork->wait();
+        } catch(\Exception $e) {
+            $exception = $e->getMessage();
+        }
+
+        $this->assertSame("", $exception);
     }
 }

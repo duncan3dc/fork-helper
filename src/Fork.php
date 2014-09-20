@@ -66,6 +66,7 @@ class Fork
         }
 
         $error = false;
+        $status = 0;
         foreach ($threads as $pid) {
             pcntl_waitpid($pid, $status);
             if ($status > 0) {
