@@ -10,6 +10,7 @@ install:
 
 script:
   - phpunit tests
+  - ./tests/lint.sh
 
 git:
   depth: 5
