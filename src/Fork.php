@@ -32,7 +32,7 @@ class Fork
                 if ($args === null) {
                     $func();
                 } else {
-                    call_user_func($func, $args);
+                    call_user_func_array($func, $args);
                 }
             } catch(\Exception $e) {
                 $memory = shmop_open($this->memoryKey, "c", 0644, static::SHARED_MEMORY_LIMIT);
