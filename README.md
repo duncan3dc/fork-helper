@@ -4,6 +4,7 @@ fork-helper
 Simple class to fork processes in PHP and allow multi-threading
 
 [![Build Status](https://travis-ci.org/duncan3dc/fork-helper.svg?branch=master)](https://travis-ci.org/duncan3dc/fork-helper)
+[![Latest Stable Version](https://poser.pugx.org/duncan3dc/fork-helper/version.svg)](https://packagist.org/packages/duncan3dc/fork-helper)
 
 
 
