@@ -2,14 +2,35 @@
 
 namespace duncan3dc\Helpers;
 
+/**
+ * Class to make multi-threaded processes easier.
+ */
 class Fork
 {
+    /**
+     * How much shared memory to allocate for exception messages.
+     */
     const SHARED_MEMORY_LIMIT = 1000;
+
+    /**
+     * @var array $threads The threads created
+     */
     private $threads;
+
+    /**
+     * @var int $memoryKey The key to use for the shared memory
+     */
     private $memoryKey;
+
+    /**
+     * @var boolean $ignoreErrors By default errors cause Exceptions to be thrown, see this to true to prevent this
+     */
     public  $ignoreErrors;
 
 
+    /**
+     * Create a container to run multiple threads.
+     */
     public function __construct()
     {
         $this->threads = [];
@@ -18,7 +39,15 @@ class Fork
     }
 
 
-    public function call($func, $args = null)
+    /**
+     * Run some code in a thread.
+     *
+     * @param callable $func The function to execute
+     * @param array|mixed $args The arguments (or a single argument) to pass to the function
+     *
+     * @return int The pid of the thread created to execute this code
+     */
+    public function call(callable $func, $args = null)
     {
         $pid = pcntl_fork();
 
@@ -57,7 +86,14 @@ class Fork
     }
 
 
-    public function wait($pid = false)
+    /**
+     * Wait for the processes started via call().
+     *
+     * @param int $pid The pid to wait for, if none is passed then all threads created by this object will be waited for
+     *
+     * @return int The highest return status for each of the processes we've waited for
+     */
+    public function wait($pid = null)
     {
         if ($pid) {
             $threads = [$pid];
@@ -92,6 +128,9 @@ class Fork
     }
 
 
+    /**
+     * If no call to wait() is made, then we wait for the threads on destruct
+     */
     public function __destruct()
     {
         $this->wait();
