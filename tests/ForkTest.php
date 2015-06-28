@@ -1,9 +1,10 @@
 <?php
 
-namespace duncan3dc\Helpers;
+use duncan3dc\Helpers\Fork;
 
 class ForkTest extends \PHPUnit_Framework_TestCase
 {
+
     public function testOutput()
     {
         $output = "";
@@ -86,5 +87,17 @@ class ForkTest extends \PHPUnit_Framework_TestCase
         }
 
         $this->assertSame("", $exception);
+    }
+
+
+    public function testWait()
+    {
+        $fork = new Fork;
+        $pid = $fork->call(function() {
+        });
+
+        $status = $fork->wait($pid);
+
+        $this->assertSame(0, $status);
     }
 }
