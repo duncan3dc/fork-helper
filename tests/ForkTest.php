@@ -13,7 +13,7 @@ class ForkTest extends \PHPUnit_Framework_TestCase
         $memoryKey = round(microtime(true) * 1000);
         $memoryLimit = 100;
 
-        $writeToMemory = function($string) use(&$output, $memoryKey, $memoryLimit) {
+        $writeToMemory = function ($string) use (&$output, $memoryKey, $memoryLimit) {
             $memory = shmop_open($memoryKey, "c", 0644, $memoryLimit);
             $output = shmop_read($memory, 0, $memoryLimit);
             if ($output = trim($output)) {
@@ -26,13 +26,13 @@ class ForkTest extends \PHPUnit_Framework_TestCase
 
         $fork = new Fork;
 
-        $fork->call(function() use($writeToMemory) {
+        $fork->call(function () use ($writeToMemory) {
             $writeToMemory("func1.1");
             usleep(80000);
             $writeToMemory("func1.2");
         });
 
-        $fork->call(function() use ($writeToMemory) {
+        $fork->call(function () use ($writeToMemory) {
             usleep(50000);
             $writeToMemory("func2.1");
             usleep(50000);
@@ -57,7 +57,7 @@ class ForkTest extends \PHPUnit_Framework_TestCase
     public function testException()
     {
         $fork = new Fork;
-        $fork->call(function() {
+        $fork->call(function () {
             throw new \Exception("Test");
         });
 
@@ -77,7 +77,7 @@ class ForkTest extends \PHPUnit_Framework_TestCase
     {
         $fork = new Fork;
         $fork->ignoreErrors = true;
-        $fork->call(function() {
+        $fork->call(function () {
             throw new \Exception("Test");
         });
 
@@ -95,7 +95,7 @@ class ForkTest extends \PHPUnit_Framework_TestCase
     public function testWait()
     {
         $fork = new Fork;
-        $pid = $fork->call(function() {
+        $pid = $fork->call(function () {
         });
 
         $status = $fork->wait($pid);
