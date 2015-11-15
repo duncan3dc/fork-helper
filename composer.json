@@ -16,6 +16,9 @@
         "ext-shmop": "*",
         "php": ">=5.4.0"
     },
+    "require-dev": {
+        "phpunit/phpunit": "^5.0"
+    },
     "autoload": {
         "psr-4": {
             "duncan3dc\\Helpers\\": "src/",
