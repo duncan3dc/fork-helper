@@ -63,7 +63,7 @@ class Fork
                 } else {
                     call_user_func_array($func, $args);
                 }
-            } catch(\Exception $e) {
+            } catch (\Throwable $e) {
                 $memory = shmop_open($this->memoryKey, "c", 0644, static::SHARED_MEMORY_LIMIT);
                 $errors = shmop_read($memory, 0, static::SHARED_MEMORY_LIMIT);
                 $errors = trim($errors);
