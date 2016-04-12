@@ -15,12 +15,12 @@ class Fork
     /**
      * @var array $threads The threads created
      */
-    private $threads;
+    protected $threads;
 
     /**
      * @var int $memoryKey The key to use for the shared memory
      */
-    private $memoryKey;
+    protected $memoryKey;
 
     /**
      * @var boolean $ignoreErrors By default errors cause Exceptions to be thrown, see this to true to prevent this
