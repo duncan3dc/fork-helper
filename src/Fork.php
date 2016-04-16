@@ -126,7 +126,16 @@ class Fork
 
         return $status;
     }
-
+    
+    /**
+     * Get forks' PIDs
+     * 
+     * @return array
+     */
+    public function getPIDs()
+    {
+        return array_values($this->threads);
+    }
 
     /**
      * If no call to wait() is made, then we wait for the threads on destruct
