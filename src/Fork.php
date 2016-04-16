@@ -15,12 +15,12 @@ class Fork
     /**
      * @var array $threads The threads created
      */
-    protected $threads;
+    private $threads;
 
     /**
      * @var int $memoryKey The key to use for the shared memory
      */
-    protected $memoryKey;
+    private $memoryKey;
 
     /**
      * @var boolean $ignoreErrors By default errors cause Exceptions to be thrown, see this to true to prevent this
@@ -126,7 +126,16 @@ class Fork
 
         return $status;
     }
-
+    
+    /**
+     * Get forks' PIDs
+     * 
+     * @return array
+     */
+    public function getPIDs()
+    {
+        return array_values($this->threads);
+    }
 
     /**
      * If no call to wait() is made, then we wait for the threads on destruct
