@@ -14,7 +14,7 @@
     "require": {
         "ext-pcntl": "*",
         "ext-shmop": "*",
-        "php": ">=7.0.0"
+        "php": "^7.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^5.0"
