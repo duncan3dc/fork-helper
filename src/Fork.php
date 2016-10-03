@@ -64,16 +64,9 @@ class Fork
                     call_user_func_array($func, $args);
                 }
             } catch(\Exception $e) {
-                $memory = shmop_open($this->memoryKey, "c", 0644, static::SHARED_MEMORY_LIMIT);
-                $errors = shmop_read($memory, 0, static::SHARED_MEMORY_LIMIT);
-                $errors = trim($errors);
-                if ($errors) {
-                    $errors .= "\n";
-                }
-                $errors .= "Exception: " . $e->getMessage() . " (" . $e->getFile() . ":" . $e->getLine() . ")";
-                shmop_write($memory, $errors, 0);
-                shmop_close($memory);
-                exit(1);
+                $this->onException($e);
+            } catch (\Throwable $e) {
+                $this->onException($e);
             }
 
             # Then we must exit or else we will end up the child process running the parent processes code
@@ -143,5 +136,23 @@ class Fork
     public function __destruct()
     {
         $this->wait();
+    }
+
+    /**
+     * @param \Exception|\Throwable $e
+     */
+    private function onException($e)
+    {
+        $memory = shmop_open($this->memoryKey, "c", 0644, static::SHARED_MEMORY_LIMIT);
+        $errors = shmop_read($memory, 0, static::SHARED_MEMORY_LIMIT);
+        $errors = trim($errors);
+        if ($errors) {
+            $errors .= "\n";
+        }
+        $class = get_class($e);
+        $errors .= "{$class}: " . $e->getMessage() . " (" . $e->getFile() . ":" . $e->getLine() . ")";
+        shmop_write($memory, $errors, 0);
+        shmop_close($memory);
+        exit(1);
     }
 }
