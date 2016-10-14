@@ -13,19 +13,19 @@ class Fork
     const SHARED_MEMORY_LIMIT = 1000;
 
     /**
-     * @var array $threads The threads created
+     * @var array $threads The threads created.
      */
-    private $threads;
+    private $threads = [];
 
     /**
-     * @var int $memoryKey The key to use for the shared memory
+     * @var int $memoryKey The key to use for the shared memory.
      */
     private $memoryKey;
 
     /**
-     * @var boolean $ignoreErrors By default errors cause Exceptions to be thrown, see this to true to prevent this
+     * @var boolean $ignoreErrors By default errors cause exceptions to be thrown.
      */
-    public  $ignoreErrors;
+    public $ignoreErrors = false;
 
 
     /**
@@ -33,8 +33,6 @@ class Fork
      */
     public function __construct()
     {
-        $this->threads = [];
-        $this->ignoreErrors = false;
         $this->memoryKey = round(microtime(true) * 1000);
     }
 
@@ -117,28 +115,30 @@ class Fork
             shmop_delete($memory);
             shmop_close($memory);
 
-            $error = "An error occurred within a thread, the return code was (" . $error . ")";
+            $error = "An error occurred within a thread, the return code was: {$error}";
             if ($errors = trim($errors)) {
-                $error .= "\n" . $errors;
+                $error .= "\n{$errors}";
             }
             throw new \Exception($error);
         }
 
         return $status;
     }
-    
+
+
     /**
-     * Get forks' PIDs
-     * 
-     * @return array
+     * Get forks' PIDs.
+     *
+     * @return int[]
      */
     public function getPIDs()
     {
         return array_values($this->threads);
     }
 
+
     /**
-     * If no call to wait() is made, then we wait for the threads on destruct
+     * If no call to wait() is made, then we wait for the threads on destruct.
      */
     public function __destruct()
     {

@@ -64,12 +64,12 @@ class ForkTest extends \PHPUnit_Framework_TestCase
         $exception = "";
         try {
             $fork->wait();
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             $exception = $e->getMessage();
             $exception = explode("\n", $exception)[0];
         }
 
-        $this->assertSame("An error occurred within a thread, the return code was (256)", $exception);
+        $this->assertSame("An error occurred within a thread, the return code was: 256", $exception);
     }
 
 
@@ -84,7 +84,7 @@ class ForkTest extends \PHPUnit_Framework_TestCase
         $exception = "";
         try {
             $fork->wait();
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             $exception = $e->getMessage();
         }
 
