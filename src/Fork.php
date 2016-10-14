@@ -22,11 +22,6 @@ class Fork
      */
     private $memoryKey;
 
-    /**
-     * @var boolean $ignoreErrors By default errors cause exceptions to be thrown.
-     */
-    public $ignoreErrors = false;
-
 
     /**
      * Create a container to run multiple threads.
@@ -89,7 +84,7 @@ class Fork
      *
      * @param int $pid The pid to wait for, if none is passed then all threads created by this object will be waited for
      *
-     * @return int The highest return status for each of the processes we've waited for
+     * @return void
      */
     public function wait($pid = null)
     {
@@ -99,7 +94,7 @@ class Fork
             $threads = $this->threads;
         }
 
-        $error = false;
+        $error = 0;
         $status = 0;
         foreach ($threads as $pid) {
             pcntl_waitpid($pid, $status);
@@ -109,20 +104,21 @@ class Fork
             unset($this->threads[$pid]);
         }
 
-        if (!$this->ignoreErrors && $error) {
-            $memory = shmop_open($this->memoryKey, "a", 0, 0);
-            $errors = shmop_read($memory, 0, static::SHARED_MEMORY_LIMIT);
-            shmop_delete($memory);
-            shmop_close($memory);
-
-            $error = "An error occurred within a thread, the return code was: {$error}";
-            if ($errors = trim($errors)) {
-                $error .= "\n{$errors}";
-            }
-            throw new \Exception($error);
+        # If no errors occured then we're done
+        if ($error === 0) {
+            return;
         }
 
-        return $status;
+        $memory = shmop_open($this->memoryKey, "a", 0, 0);
+        $errors = shmop_read($memory, 0, static::SHARED_MEMORY_LIMIT);
+        shmop_delete($memory);
+        shmop_close($memory);
+
+        $message = "An error occurred within a thread, the return code was: {$error}";
+        if ($errors = trim($errors)) {
+            $message .= "\n{$errors}";
+        }
+        throw new \Exception($message, $error);
     }
 
 

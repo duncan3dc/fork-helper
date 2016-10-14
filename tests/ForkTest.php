@@ -73,33 +73,18 @@ class ForkTest extends \PHPUnit_Framework_TestCase
     }
 
 
-    public function testIgnoreErrors()
+    public function testNoException()
     {
         $fork = new Fork;
-        $fork->ignoreErrors = true;
-        $fork->call(function () {
-            throw new \Exception("Test");
-        });
 
-        $exception = "";
-        try {
-            $fork->wait();
-        } catch (\Exception $e) {
-            $exception = $e->getMessage();
-        }
+        $tmp = tempnam(sys_get_temp_dir(), "phpunit-fork-helper-");
 
-        $this->assertSame("", $exception);
-    }
+        $pid = $fork->call(function ($tmp) {
+            file_put_contents($tmp, "success!");
+        }, $tmp);
 
+        $fork->wait($pid);
 
-    public function testWait()
-    {
-        $fork = new Fork;
-        $pid = $fork->call(function () {
-        });
-
-        $status = $fork->wait($pid);
-
-        $this->assertSame(0, $status);
+        $this->assertSame("success!", file_get_contents($tmp));
     }
 }
