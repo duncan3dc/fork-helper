@@ -1,41 +1,33 @@
 fork-helper
 ===========
 
-Simple class to fork processes in PHP and allow multi-threading
+Simple class to fork processes in PHP and allow multi-threading.  
+
+Full documentation is available at http://duncan3dc.github.io/fork-helper/  
+PHPDoc API documentation is also available at [http://duncan3dc.github.io/fork-helper/api/](http://duncan3dc.github.io/fork-helper/api/namespaces/duncan3dc.Forker.html)  
 
 [![Build Status](https://travis-ci.org/duncan3dc/fork-helper.svg?branch=master)](https://travis-ci.org/duncan3dc/fork-helper)
 [![Latest Stable Version](https://poser.pugx.org/duncan3dc/fork-helper/version.svg)](https://packagist.org/packages/duncan3dc/fork-helper)
 
 
+Quick Example
+-------------
 
-Public Methods
---------------
-* call(callable $func): int - Calls the specified function in a new thread, and returns the pid of the created thread.
-* wait(): int - Waits for the threads created by the call() method to finish. Returns 0 if all threads completed succesfully, otherwise it will return the exit code of an failed thread.
-
-
-Public Properties
------------------
-* ignoreErrors: boolean - False by default, this will cause the wait() method to throw an exception for any threads with an exit status above 0. If this property is set to true then wait() will not throw an exception but just return the exit status of a failed thread.
-
-
-Examples
---------
-
+Run some code asynchronously:
 ```php
-$fork = new \duncan3dc\Helpers\Fork;
+$fork = new \duncan3dc\Forker\Fork;
 
-$fork->call(function() {
-	for($i = 1; $i <= 3; $i++) {
-		echo "Process A - " . $i . "\n";
-		sleep(1);
-	}
+$fork->call(function () {
+    for ($i = 1; $i <= 3; $i++) {
+        echo "Process A - " . $i . "\n";
+        sleep(1);
+    }
 });
-$fork->call(function() {
-	for($i = 1; $i < 3; $i++) {
-		echo "Process B - " . $i . "\n";
-		sleep(1);
-	}
+$fork->call(function () {
+    for ($i = 1; $i < 3; $i++) {
+        echo "Process B - " . $i . "\n";
+        sleep(1);
+    }
 });
 
 sleep(1);
@@ -43,3 +35,17 @@ echo "Waiting for the threads to finish...\n";
 $fork->wait();
 echo "End\n";
 ```
+
+_Read more at http://duncan3dc.github.io/fork-helper/_  
+
+
+Changelog
+---------
+A [Changelog](CHANGELOG.md) has been available since version 2.0.0
+
+
+Where to get help
+-----------------
+Found a bug? Got a question? Just not sure how something works?  
+Please [create an issue](https//github.com/duncan3dc/fork-helper/issues) and I'll do my best to help out.  
+Alternatively you can catch me on [Twitter](https://twitter.com/duncan3dc)
