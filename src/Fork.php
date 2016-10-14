@@ -45,7 +45,7 @@ class Fork
         $pid = pcntl_fork();
 
         if ($pid == -1) {
-            throw new \Exception("Failed to fork");
+            throw new Exception("Failed to fork");
         }
 
         # If this is the child process, then run the requested function
@@ -118,7 +118,7 @@ class Fork
         if ($errors = trim($errors)) {
             $message .= "\n{$errors}";
         }
-        throw new \Exception($message, $error);
+        throw new Exception($message, $error);
     }
 
 
