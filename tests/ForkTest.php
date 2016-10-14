@@ -2,6 +2,7 @@
 
 namespace duncan3dc\ForkerTests\Fork;
 
+use duncan3dc\Forker\Exception;
 use duncan3dc\Forker\Fork;
 
 class ForkTest extends \PHPUnit_Framework_TestCase
@@ -57,19 +58,38 @@ class ForkTest extends \PHPUnit_Framework_TestCase
     public function testException()
     {
         $fork = new Fork;
+
+        $this->setExpectedException(Exception::class, "An error occurred within a thread, the return code was: 256");
         $fork->call(function () {
-            throw new \Exception("Test");
+            throw new \InvalidArgumentException("Test");
         });
 
-        $exception = "";
-        try {
-            $fork->wait();
-        } catch (\Exception $e) {
-            $exception = $e->getMessage();
-            $exception = explode("\n", $exception)[0];
-        }
+        $fork->wait();
+    }
 
-        $this->assertSame("An error occurred within a thread, the return code was: 256", $exception);
+
+    public function testGetPIDs()
+    {
+        $fork = new Fork;
+
+        $pids[] = $fork->call("phpversion");
+        $pids[] = $fork->call("phpversion");
+
+        $this->assertSame($pids, $fork->getPids());
+    }
+
+
+    public function testGetPIDsAfterWait()
+    {
+        $fork = new Fork;
+
+        $pids[] = $fork->call("phpversion");
+        $pids[] = $fork->call("phpversion");
+
+        $pid = array_shift($pids);
+        $fork->wait($pid);
+
+        $this->assertSame($pids, $fork->getPids());
     }
 
 
