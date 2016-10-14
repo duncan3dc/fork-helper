@@ -1,6 +1,6 @@
 <?php
 
-namespace duncan3dc\Helpers;
+namespace duncan3dc\Forker;
 
 /**
  * Class to make multi-threaded processes easier.

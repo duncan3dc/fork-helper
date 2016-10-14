@@ -1,8 +1,8 @@
 <?php
 
-namespace duncan3dc\HelperTests\Fork;
+namespace duncan3dc\ForkerTests\Fork;
 
-use duncan3dc\Helpers\Fork;
+use duncan3dc\Forker\Fork;
 
 class ForkTest extends \PHPUnit_Framework_TestCase
 {

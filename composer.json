@@ -21,8 +21,8 @@
     },
     "autoload": {
         "psr-4": {
-            "duncan3dc\\Helpers\\": "src/",
-            "duncan3dc\\HelperTests\\": "tests/"
+            "duncan3dc\\Forker\\": "src/",
+            "duncan3dc\\ForkerTests\\": "tests/"
         }
     }
 }
