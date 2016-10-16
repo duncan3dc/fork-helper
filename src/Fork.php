@@ -20,10 +20,16 @@ class Fork
 
     /**
      * Create a container to run multiple threads.
+     *
+     * @param AdapterInterface $adapter The adapter to use to handle the threading
      */
-    public function __construct()
+    public function __construct(AdapterInterface $adapter = null)
     {
-        $this->adapter = new PcntlAdapter;
+        if ($adapter === null) {
+            $adapter = new PcntlAdapter;
+        }
+
+        $this->adapter = $adapter;
     }
 
 
