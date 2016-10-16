@@ -5,6 +5,7 @@ namespace duncan3dc\ForkerTests\Fork;
 use duncan3dc\Forker\AdapterInterface;
 use duncan3dc\Forker\Exception;
 use duncan3dc\Forker\Fork;
+use duncan3dc\Forker\SingleThreadAdapter;
 use Mockery;
 
 class ForkTest extends \PHPUnit_Framework_TestCase
@@ -137,5 +138,18 @@ class ForkTest extends \PHPUnit_Framework_TestCase
         $this->setExpectedException(Exception::class, "An error occurred within a thread, the return code was: 256");
         $adapter->shouldReceive("getExceptions")->once()->andReturn([]);
         $this->fork->wait();
+    }
+
+
+    public function testDestruct()
+    {
+        $fork = new Fork(new SingleThreadAdapter);
+
+        $fork->call(function () {
+            throw new \DomainException("¯\_(ツ)_/¯");
+        });
+
+        $this->setExpectedException(Exception::class, "An error occurred within a thread, the return code was: 256");
+        unset($fork);
     }
 }

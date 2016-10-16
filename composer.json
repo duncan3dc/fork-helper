@@ -12,9 +12,11 @@
         "role": "Developer"
     }],
     "require": {
-        "ext-pcntl": "*",
-        "ext-shmop": "*",
         "php": "^7.0"
+    },
+    "suggest": {
+        "ext-pcntl": "Needed to allow multi-threaded execution of code",
+        "ext-shmop": "If pcntl is present then shmop is required to handle errors"
     },
     "require-dev": {
         "mockery/mockery": "^0.9.5",

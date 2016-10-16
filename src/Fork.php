@@ -26,7 +26,11 @@ class Fork
     public function __construct(AdapterInterface $adapter = null)
     {
         if ($adapter === null) {
-            $adapter = new PcntlAdapter;
+            if (function_exists("pcntl_fork")) {
+                $adapter = new PcntlAdapter;
+            } else {
+                $adapter = new SingleThreadAdapter;
+            }
         }
 
         $this->adapter = $adapter;
