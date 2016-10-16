@@ -30,7 +30,7 @@ final class PcntlAdapter implements AdapterInterface
      *
      * @return int The pid of the thread created to execute this code
      */
-    public function call(callable $func, ...$args)
+    public function call(callable $func, ...$args): int
     {
         $pid = pcntl_fork();
 
@@ -63,7 +63,7 @@ final class PcntlAdapter implements AdapterInterface
      *
      * @return int The exit code of the thread
      */
-    public function wait($pid)
+    public function wait($pid): int
     {
         $status = 0;
 
@@ -78,7 +78,7 @@ final class PcntlAdapter implements AdapterInterface
      *
      * @return \Throwable[]
      */
-    public function getExceptions()
+    public function getExceptions(): array
     {
         return $this->memory->getExceptions();
     }

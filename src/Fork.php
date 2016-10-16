@@ -45,7 +45,7 @@ class Fork
      *
      * @return int The pid of the thread created to execute this code
      */
-    public function call(callable $func, ...$args)
+    public function call(callable $func, ...$args): int
     {
         $pid = $this->adapter->call($func, ...$args);
 
@@ -100,7 +100,7 @@ class Fork
      *
      * @return int[]
      */
-    public function getPIDs()
+    public function getPIDs(): array
     {
         return array_values($this->threads);
     }

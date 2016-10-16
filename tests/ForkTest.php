@@ -31,16 +31,16 @@ class ForkTest extends \PHPUnit_Framework_TestCase
     private function getSimpleAdapter()
     {
         $adapter = new class implements AdapterInterface {
-            public function call(callable $func, ...$args)
+            public function call(callable $func, ...$args): int
             {
                 $func(...$args);
                 return rand(1, 999);
             }
-            public function wait($pid)
+            public function wait($pid): int
             {
                 return 0;
             }
-            public function getExceptions()
+            public function getExceptions(): array
             {
                 return [];
             }

@@ -31,7 +31,7 @@ final class SingleThreadAdapter implements AdapterInterface
      *
      * @return int The pid of the thread created to execute this code
      */
-    public function call(callable $func, ...$args)
+    public function call(callable $func, ...$args): int
     {
         $pid = ++$this->pid;
 
@@ -55,7 +55,7 @@ final class SingleThreadAdapter implements AdapterInterface
      *
      * @return int The exit code of the thread
      */
-    public function wait($pid)
+    public function wait($pid): int
     {
         return $this->status[$pid];
     }
@@ -66,7 +66,7 @@ final class SingleThreadAdapter implements AdapterInterface
      *
      * @return \Throwable[]
      */
-    public function getExceptions()
+    public function getExceptions(): array
     {
         return $this->exceptions;
     }
