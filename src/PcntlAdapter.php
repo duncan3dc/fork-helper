@@ -5,7 +5,7 @@ namespace duncan3dc\Forker;
 /**
  * Handle multi-threading using the pcntl module.
  */
-final class PcntlAdapter
+final class PcntlAdapter implements AdapterInterface
 {
     /**
      * @var SharedMemory $memory Caught exceptions from the threads.
