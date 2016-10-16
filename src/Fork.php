@@ -36,11 +36,11 @@ class Fork
      * Run some code in a thread.
      *
      * @param callable $func The function to execute
-     * @param array|mixed $args The arguments (or a single argument) to pass to the function
+     * @param mixed $args The arguments to pass to the function
      *
      * @return int The pid of the thread created to execute this code
      */
-    public function call(callable $func, $args = null)
+    public function call(callable $func, ...$args)
     {
         $pid = pcntl_fork();
 
@@ -51,11 +51,7 @@ class Fork
         # If this is the child process, then run the requested function
         if (!$pid) {
             try {
-                if ($args === null) {
-                    $func();
-                } else {
-                    call_user_func_array($func, $args);
-                }
+                $func(...$args);
             } catch (\Throwable $e) {
                 $memory = shmop_open($this->memoryKey, "c", 0644, static::SHARED_MEMORY_LIMIT);
                 $errors = shmop_read($memory, 0, static::SHARED_MEMORY_LIMIT);

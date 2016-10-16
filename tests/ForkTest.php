@@ -68,6 +68,20 @@ class ForkTest extends \PHPUnit_Framework_TestCase
     }
 
 
+    public function testCallArguments()
+    {
+        $fork = new Fork;
+
+        $this->expectOutputString("value1\nvalue2");
+
+        $fork->call(function ($line1, $line2) {
+            echo "{$line1}\n{$line2}";
+        }, "value1", "value2");
+
+        $fork->wait();
+    }
+
+
     public function testGetPIDs()
     {
         $fork = new Fork;
