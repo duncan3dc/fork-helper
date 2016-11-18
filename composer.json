@@ -1,9 +1,9 @@
 {
-    "name": "duncan3dc/fork-helper",
+    "name": "eaglewu/fork-helper",
     "type": "library",
     "description": "Simple class to fork processes in PHP and allow multi-threading",
     "keywords": ["fork","process","control","pcntl","multi-threading"],
-    "homepage": "https://github.com/duncan3dc/fork-helper",
+    "homepage": "https://github.com/eaglewu/fork-helper",
     "license": "Apache-2.0",
     "authors": [{
         "name": "Craig Duncan",
