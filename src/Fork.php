@@ -80,12 +80,12 @@ class Fork
             unset($this->threads[$pid]);
         }
 
+        $exceptions = $this->adapter->getExceptions();
+
         # If no errors occured then we're done
         if ($error === 0) {
             return;
         }
-
-        $exceptions = $this->adapter->getExceptions();
 
         $message = "An error occurred within a thread, the return code was: {$error}\n";
         foreach ($exceptions as $exception) {
