@@ -82,6 +82,8 @@ class Fork
 
         # If no errors occured then we're done
         if ($error === 0) {
+            # For delete shared memory when use PcntlAdapter
+            $this->adapter->getExceptions();
             return;
         }
 
