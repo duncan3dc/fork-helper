@@ -81,13 +81,17 @@ final class SharedMemory
      */
     public function getExceptions(): array
     {
-        $memory = shmop_open($this->key, "a", 0, 0);
+        try {
+            $memory = shmop_open($this->key, "a", 0, 0);
 
-        $exceptions = $this->unserialize($memory);
+            $exceptions = $this->unserialize($memory);
 
-        shmop_delete($memory);
-        shmop_close($memory);
+            shmop_delete($memory);
+            shmop_close($memory);
 
-        return $exceptions;
+            return $exceptions;
+        } catch (\Exception $e) {
+            return [];
+        }
     }
 }
