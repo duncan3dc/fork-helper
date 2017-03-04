@@ -71,7 +71,8 @@ class ForkTest extends TestCase
 
         $adapter->shouldReceive("wait")->once()->with(5)->andReturn(0);
 
-        $this->fork->wait(5);
+        $result = $this->fork->wait(5);
+        $this->assertSame($this->fork, $result);
     }
 
 
@@ -120,7 +121,9 @@ class ForkTest extends TestCase
         $pids[] = $this->fork->call("phpversion");
 
         $pid = array_shift($pids);
-        $this->fork->wait($pid);
+
+        $result = $this->fork->wait($pid);
+        $this->assertSame($this->fork, $result);
     }
 
 

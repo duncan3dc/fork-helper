@@ -60,7 +60,7 @@ class Fork
      *
      * @param int $pid The pid to wait for, if none is passed then all threads created by this object will be waited for
      *
-     * @return void
+     * @return $this
      */
     public function wait($pid = null)
     {
@@ -80,18 +80,17 @@ class Fork
             unset($this->threads[$pid]);
         }
 
-        # If no errors occured then we're done
-        if ($error === 0) {
-            return;
+        if ($error !== 0) {
+            $exceptions = $this->adapter->getExceptions();
+
+            $message = "An error occurred within a thread, the return code was: {$error}\n";
+            foreach ($exceptions as $exception) {
+                $message .= "  - {$exception}\n";
+            }
+            throw new Exception($message, $error);
         }
 
-        $exceptions = $this->adapter->getExceptions();
-
-        $message = "An error occurred within a thread, the return code was: {$error}\n";
-        foreach ($exceptions as $exception) {
-            $message .= "  - {$exception}\n";
-        }
-        throw new Exception($message, $error);
+        return $this;
     }
 
 

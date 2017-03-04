@@ -78,6 +78,7 @@ class PcntlAdapterTest extends TestCase
     {
         $this->fork->call("phpversion");
 
-        $this->fork->wait();
+        $result = $this->fork->wait();
+        $this->assertSame($this->fork, $result);
     }
 }
