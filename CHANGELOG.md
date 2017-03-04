@@ -5,6 +5,19 @@ Changelog
 
 --------
 
+## 2.1.0 - 2017-03-04
+
+### Added
+
+* [Forking] Made the wait() method chainable.
+
+### Fixed
+
+* [SharedMemory] Avoid creating two instances for the same memory.
+* [Exceptions] Allow more exceptions to be added after initial retrieval.
+
+--------
+
 ## 2.0.0 - 2016-10-16
 
 ### Added
