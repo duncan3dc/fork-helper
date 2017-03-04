@@ -19,6 +19,7 @@
         "ext-shmop": "If pcntl is present then shmop is required to handle errors"
     },
     "require-dev": {
+        "duncan3dc/object-intruder": "^0.1.0",
         "mockery/mockery": "^0.9.9",
         "phpunit/phpunit": "^6.0"
     },

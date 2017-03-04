@@ -3,6 +3,7 @@
 namespace duncan3dc\ForkerTests;
 
 use duncan3dc\Forker\SharedMemory;
+use duncan3dc\ObjectIntruder\Intruder;
 use PHPUnit\Framework\TestCase;
 
 class SharedMemoryTest extends TestCase
@@ -11,7 +12,25 @@ class SharedMemoryTest extends TestCase
 
     public function setUp()
     {
+        error_reporting(\E_ALL);
+
         $this->memory = new SharedMemory;
+    }
+
+
+    public function testConstructor()
+    {
+        # Avoid warning/notices
+        error_reporting(0);
+
+        # Ensure that two instances are not given the same key
+        $memory1 = new SharedMemory;
+        $memory2 = new SharedMemory;
+
+        $key1 = (new Intruder($memory1))->key;
+        $key2 = (new Intruder($memory2))->key;
+
+        $this->assertGreaterThan($key1, $key2);
     }
 
 

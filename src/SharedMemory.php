@@ -23,6 +23,9 @@ final class SharedMemory
      */
     public function __construct()
     {
+        # Avoid creating 2 instances using the same memory segment
+        usleep(1000);
+
         $this->key = round(microtime(true) * 1000);
 
         # Initialise the memory
