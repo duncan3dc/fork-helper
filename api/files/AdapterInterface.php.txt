@@ -23,7 +23,7 @@ interface AdapterInterface
      *
      * @return int The exit code of the thread
      */
-    public function wait($pid): int;
+    public function wait(int $pid): int;
 
 
     /**
