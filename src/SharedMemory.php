@@ -106,4 +106,17 @@ final class SharedMemory
 
         return $exceptions;
     }
+
+
+    /**
+     * Delete the shared memory this instance represents.
+     *
+     * @return void
+     */
+    public function delete(): void
+    {
+        $memory = shmop_open($this->key, "a", 0, 0);
+        shmop_delete($memory);
+        shmop_close($memory);
+    }
 }
