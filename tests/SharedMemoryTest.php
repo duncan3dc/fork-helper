@@ -3,8 +3,9 @@
 namespace duncan3dc\ForkerTests;
 
 use duncan3dc\Forker\SharedMemory;
+use PHPUnit\Framework\TestCase;
 
-class SharedMemoryTest extends \PHPUnit_Framework_TestCase
+class SharedMemoryTest extends TestCase
 {
     private $memory;
 

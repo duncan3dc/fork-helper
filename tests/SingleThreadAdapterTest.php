@@ -5,8 +5,9 @@ namespace duncan3dc\ForkerTests\Fork;
 use duncan3dc\Forker\Exception;
 use duncan3dc\Forker\Fork;
 use duncan3dc\Forker\SingleThreadAdapter;
+use PHPUnit\Framework\TestCase;
 
-class SingleThreadAdapterTest extends \PHPUnit_Framework_TestCase
+class SingleThreadAdapterTest extends TestCase
 {
     private $adapter;
     private $fork;
@@ -41,7 +42,7 @@ class SingleThreadAdapterTest extends \PHPUnit_Framework_TestCase
 
     public function testException()
     {
-        $this->setExpectedException(Exception::class, "An error occurred within a thread, the return code was: 256");
+        $this->expectException(Exception::class, "An error occurred within a thread, the return code was: 256");
         $this->fork->call(function () {
             throw new \InvalidArgumentException("Test");
         });

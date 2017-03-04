@@ -5,8 +5,9 @@ namespace duncan3dc\ForkerTests\Fork;
 use duncan3dc\Forker\Exception;
 use duncan3dc\Forker\Fork;
 use duncan3dc\Forker\PcntlAdapter;
+use PHPUnit\Framework\TestCase;
 
-class PcntlAdapterTest extends \PHPUnit_Framework_TestCase
+class PcntlAdapterTest extends TestCase
 {
     private $fork;
 
@@ -63,7 +64,7 @@ class PcntlAdapterTest extends \PHPUnit_Framework_TestCase
 
     public function testException()
     {
-        $this->setExpectedException(Exception::class, "An error occurred within a thread, the return code was: 256");
+        $this->expectException(Exception::class, "An error occurred within a thread, the return code was: 256");
 
         $this->fork->call(function () {
             throw new \InvalidArgumentException("Test");

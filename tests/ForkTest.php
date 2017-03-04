@@ -7,8 +7,9 @@ use duncan3dc\Forker\Exception;
 use duncan3dc\Forker\Fork;
 use duncan3dc\Forker\SingleThreadAdapter;
 use Mockery;
+use PHPUnit\Framework\TestCase;
 
-class ForkTest extends \PHPUnit_Framework_TestCase
+class ForkTest extends TestCase
 {
     private $fork;
 
@@ -135,7 +136,7 @@ class ForkTest extends \PHPUnit_Framework_TestCase
         $adapter->shouldReceive("wait")->once()->with(5)->andReturn(256);
         $this->fork->call("phpversion");
 
-        $this->setExpectedException(Exception::class, "An error occurred within a thread, the return code was: 256");
+        $this->expectException(Exception::class, "An error occurred within a thread, the return code was: 256");
         $adapter->shouldReceive("getExceptions")->once()->andReturn([]);
         $this->fork->wait();
     }
@@ -149,7 +150,7 @@ class ForkTest extends \PHPUnit_Framework_TestCase
             throw new \DomainException("¯\_(ツ)_/¯");
         });
 
-        $this->setExpectedException(Exception::class, "An error occurred within a thread, the return code was: 256");
+        $this->expectException(Exception::class, "An error occurred within a thread, the return code was: 256");
         unset($fork);
     }
 }
