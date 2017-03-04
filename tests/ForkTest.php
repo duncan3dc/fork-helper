@@ -23,6 +23,8 @@ class ForkTest extends TestCase
     private function getMockAdapter()
     {
         $adapter = Mockery::mock(AdapterInterface::class);
+        $adapter->shouldReceive("cleanup");
+
         $this->fork = new Fork($adapter);
 
         return $adapter;
@@ -44,6 +46,9 @@ class ForkTest extends TestCase
             public function getExceptions(): array
             {
                 return [];
+            }
+            public function cleanup(): void
+            {
             }
         };
 

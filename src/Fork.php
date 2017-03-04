@@ -17,6 +17,11 @@ class Fork
      */
     private $threads = [];
 
+    /**
+     * @var bool $cleanup Whether to cleanup or not.
+     */
+    private $cleanup = false;
+
 
     /**
      * Create a container to run multiple threads.
@@ -48,6 +53,8 @@ class Fork
     public function call(callable $func, ...$args): int
     {
         $pid = $this->adapter->call($func, ...$args);
+
+        $this->cleanup = true;
 
         $this->threads[$pid] = $pid;
 
@@ -111,5 +118,9 @@ class Fork
     public function __destruct()
     {
         $this->wait();
+
+        if ($this->cleanup) {
+            $this->adapter->cleanup();
+        }
     }
 }

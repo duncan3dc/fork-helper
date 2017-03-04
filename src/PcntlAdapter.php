@@ -90,11 +90,13 @@ final class PcntlAdapter implements AdapterInterface
     }
 
 
-
-    public function __destruct()
+    /**
+     * Method to be called when the adapter is finished with.
+     *
+     * @return void
+     */
+    public function cleanup(): void
     {
-        if ($this->cleanup) {
-            $this->memory->delete();
-        }
+        $this->memory->delete();
     }
 }

@@ -32,4 +32,15 @@ interface AdapterInterface
      * @return \Throwable[]
      */
     public function getExceptions(): array;
+
+
+    /**
+     * Method to be called when the adapter is finished with.
+     *
+     * A destructor can't be used as instances in
+     * forked threads will be destroyed twice.
+     *
+     * @return void
+     */
+    public function cleanup(): void;
 }
