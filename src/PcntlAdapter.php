@@ -12,6 +12,11 @@ final class PcntlAdapter implements AdapterInterface
      */
     private $memory;
 
+    /**
+     * @var bool $cleanup Whether we should cleanup the shared memory or not.
+     */
+    private $cleanup;
+
 
     /**
      * Create a new instance.
@@ -40,6 +45,7 @@ final class PcntlAdapter implements AdapterInterface
 
         # If the child process was started then return its pid
         if ($pid) {
+            $this->cleanup = true;
             return $pid;
         }
 
@@ -81,5 +87,14 @@ final class PcntlAdapter implements AdapterInterface
     public function getExceptions(): array
     {
         return $this->memory->getExceptions();
+    }
+
+
+
+    public function __destruct()
+    {
+        if ($this->cleanup) {
+            $this->memory->delete();
+        }
     }
 }
