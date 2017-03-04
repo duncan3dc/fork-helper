@@ -46,4 +46,20 @@ class SharedMemoryTest extends TestCase
         $this->assertStringMatchesFormat("DomainException: Nope (%s:%s)", $exceptions[1]);
     }
 
+
+    public function testRetrievedExceptions()
+    {
+        $this->memory->addException(new \RuntimeException("Whoops"));
+        $exceptions = $this->memory->getExceptions();
+        $this->assertSame(1, count($exceptions));
+        $this->assertStringMatchesFormat("RuntimeException: Whoops (%s:%i)", $exceptions[0]);
+
+        $exceptions = $this->memory->getExceptions();
+        $this->assertSame(0, count($exceptions));
+
+        $this->memory->addException(new \DomainException("Nope"));
+        $exceptions = $this->memory->getExceptions();
+        $this->assertSame(1, count($exceptions));
+        $this->assertStringMatchesFormat("DomainException: Nope (%s:%s)", $exceptions[0]);
+    }
 }

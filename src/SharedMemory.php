@@ -25,9 +25,21 @@ final class SharedMemory
     {
         $this->key = round(microtime(true) * 1000);
 
-        $memory = shmop_open($this->key, "c", 0644, self::LIMIT);
+        # Initialise the memory
+        $memory = $this->getMemory();
         shmop_write($memory, serialize([]), 0);
         shmop_close($memory);
+    }
+
+
+    /**
+     * Get the shared memory segment.
+     *
+     * @return resource
+     */
+    private function getMemory()
+    {
+        return shmop_open($this->key, "c", 0644, self::LIMIT);
     }
 
 
@@ -61,7 +73,7 @@ final class SharedMemory
      */
     public function addException(\Throwable $exception)
     {
-        $memory = shmop_open($this->key, "c", 0644, self::LIMIT);
+        $memory = $this->getMemory();
 
         $exceptions = $this->unserialize($memory);
 
@@ -81,11 +93,12 @@ final class SharedMemory
      */
     public function getExceptions(): array
     {
-        $memory = shmop_open($this->key, "a", 0, 0);
+        $memory = $this->getMemory();
 
         $exceptions = $this->unserialize($memory);
 
-        shmop_delete($memory);
+        shmop_write($memory, serialize([]), 0);
+
         shmop_close($memory);
 
         return $exceptions;
