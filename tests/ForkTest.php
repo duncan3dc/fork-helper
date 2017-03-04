@@ -37,7 +37,7 @@ class ForkTest extends TestCase
                 $func(...$args);
                 return rand(1, 999);
             }
-            public function wait($pid): int
+            public function wait(int $pid): int
             {
                 return 0;
             }

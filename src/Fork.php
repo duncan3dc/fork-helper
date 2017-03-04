@@ -62,7 +62,7 @@ class Fork
      *
      * @return $this
      */
-    public function wait($pid = null)
+    public function wait(int $pid = null): self
     {
         if ($pid) {
             $threads = [$pid];
