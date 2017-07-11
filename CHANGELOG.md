@@ -5,6 +5,18 @@ Changelog
 
 --------
 
+## 2.2.0 - 2017-07-11
+
+### Changed
+
+* [Forking] You MUST call wait() now, it's not safe to rely on the destructor.
+
+### Fixed
+
+* [SharedMemory] Ensure memory is deleted when we're finished.
+
+--------
+
 ## 2.1.0 - 2017-03-04
 
 ### Added
