@@ -87,9 +87,12 @@ class Fork
             foreach ($exceptions as $exception) {
                 $message .= "  - {$exception}\n";
             }
+
+            $this->adapter->cleanup();
             throw new Exception($message, $error);
         }
 
+        $this->adapter->cleanup();
         return $this;
     }
 

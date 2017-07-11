@@ -45,6 +45,9 @@ class ForkTest extends TestCase
             {
                 return [];
             }
+            public function cleanup()
+            {
+            }
         };
 
         $this->fork = new Fork($adapter);
@@ -57,6 +60,7 @@ class ForkTest extends TestCase
 
         $adapter->shouldReceive("call")->once()->andReturn(7);
         $adapter->shouldReceive("wait")->once()->with(7)->andReturn(0);
+        $adapter->shouldReceive("cleanup")->once()->with();
 
         $pid = $this->fork->call("phpversion");
         $this->fork->wait();
@@ -70,6 +74,7 @@ class ForkTest extends TestCase
         $adapter = $this->getMockAdapter();
 
         $adapter->shouldReceive("wait")->once()->with(5)->andReturn(0);
+        $adapter->shouldReceive("cleanup")->once()->with();
 
         $result = $this->fork->wait(5);
         $this->assertSame($this->fork, $result);
@@ -141,6 +146,9 @@ class ForkTest extends TestCase
 
         $this->expectException(Exception::class, "An error occurred within a thread, the return code was: 256");
         $adapter->shouldReceive("getExceptions")->once()->andReturn([]);
+
+        $adapter->shouldReceive("cleanup")->once()->with();
+
         $this->fork->wait();
     }
 }

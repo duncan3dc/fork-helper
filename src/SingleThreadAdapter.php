@@ -70,4 +70,17 @@ final class SingleThreadAdapter implements AdapterInterface
     {
         return $this->exceptions;
     }
+
+
+    /**
+     * Method to be called when the adapter is finished with.
+     *
+     * @return void
+     */
+    public function cleanup()
+    {
+        $this->pid = 0;
+        $this->exceptions = [];
+        $this->status = [];
+    }
 }

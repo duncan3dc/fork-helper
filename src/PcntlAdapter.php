@@ -82,4 +82,15 @@ final class PcntlAdapter implements AdapterInterface
     {
         return $this->memory->getExceptions();
     }
+
+
+    /**
+     * Method to be called when the adapter is finished with.
+     *
+     * @return void
+     */
+    public function cleanup()
+    {
+        $this->memory->delete();
+    }
 }
