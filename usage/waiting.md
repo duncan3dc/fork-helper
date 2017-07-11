@@ -5,19 +5,9 @@ permalink: /usage/waiting/
 api: Fork
 ---
 
-After setting some code to run using `call()` it will be nessecary at some point to wait for that code to finish.
+After setting some code to run using `call()` it will be necessary at some point to wait for that code to finish.
 
-When you're done with your `Fork` instance it will automatically wait for all threads to finish:
-
-```php
-$fork->call("doStuffThatTakesALongTime");
-
-# PHP will block here and wait for doStuffThatTakesALongTime() to return
-unset($fork);
-```
-
-
-You can choose when to wait for all threads using the `wait()` method:
+To do this must call the `wait()` method:
 
 ```php
 $fork->call("doStuffThatTakesALongTime", "5897");
@@ -26,6 +16,24 @@ $fork->call("doStuffThatTakesALongTime", "1048");
 $fork->wait();
 echo "We've done 5897 and 1048 now\n";
 
+$fork->call("doStuffThatTakesALongTime", "8077");
+$fork->call("doStuffThatTakesALongTime", "2222");
+
+$fork->wait();
+echo "We've done 8077 and 2222 now\n";
+```
+
+
+After calling `wait()` the fork instance is useless, if you want to handle code in batches, you'll need separate instances:
+```php
+$fork = new Fork;
+$fork->call("doStuffThatTakesALongTime", "5897");
+$fork->call("doStuffThatTakesALongTime", "1048");
+
+$fork->wait();
+echo "We've done 5897 and 1048 now\n";
+
+$fork = new Fork;
 $fork->call("doStuffThatTakesALongTime", "8077");
 $fork->call("doStuffThatTakesALongTime", "2222");
 
