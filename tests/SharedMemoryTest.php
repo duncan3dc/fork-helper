@@ -105,7 +105,8 @@ class SharedMemoryTest extends TestCase
         $this->memory->delete();
 
         # Make sure the memory has been cleaned up by attempting to access it
-        $this->expectException(Error::class, "shmop_open(): unable to attach or create shared memory segment 'No such file or directory'");
+        $this->expectException(Error::class);
+        $this->expectExceptionMessage("shmop_open(): unable to attach or create shared memory segment 'No such file or directory'");
         shmop_open($key, "a", 0, 0);
     }
 }

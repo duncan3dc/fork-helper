@@ -144,7 +144,8 @@ class ForkTest extends TestCase
         $adapter->shouldReceive("wait")->once()->with(5)->andReturn(256);
         $this->fork->call("phpversion");
 
-        $this->expectException(Exception::class, "An error occurred within a thread, the return code was: 256");
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage("An error occurred within a thread, the return code was: 256");
         $adapter->shouldReceive("getExceptions")->once()->andReturn([]);
 
         $adapter->shouldReceive("cleanup")->once()->with();

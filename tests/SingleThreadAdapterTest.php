@@ -42,7 +42,9 @@ class SingleThreadAdapterTest extends TestCase
 
     public function testException()
     {
-        $this->expectException(Exception::class, "An error occurred within a thread, the return code was: 256");
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage("An error occurred within a thread, the return code was: 256\n  - InvalidArgumentException: Test");
+
         $this->fork->call(function () {
             throw new \InvalidArgumentException("Test");
         });
