@@ -103,13 +103,4 @@ class Fork
     {
         return array_values($this->threads);
     }
-
-
-    /**
-     * If no call to wait() is made, then we wait for the threads on destruct.
-     */
-    public function __destruct()
-    {
-        $this->wait();
-    }
 }

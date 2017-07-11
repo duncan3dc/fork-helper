@@ -143,17 +143,4 @@ class ForkTest extends TestCase
         $adapter->shouldReceive("getExceptions")->once()->andReturn([]);
         $this->fork->wait();
     }
-
-
-    public function testDestruct()
-    {
-        $fork = new Fork(new SingleThreadAdapter);
-
-        $fork->call(function () {
-            throw new \DomainException("¯\_(ツ)_/¯");
-        });
-
-        $this->expectException(Exception::class, "An error occurred within a thread, the return code was: 256");
-        unset($fork);
-    }
 }
