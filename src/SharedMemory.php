@@ -30,7 +30,8 @@ final class SharedMemory
 
         # Initialise the memory
         $memory = $this->getMemory();
-        shmop_write($memory, serialize([]), 0);
+        shmop_write($memory, sprintf("%-10s", -1), 0);
+        shmop_write($memory, serialize([]), 10);
         shmop_close($memory);
     }
 
@@ -46,6 +47,19 @@ final class SharedMemory
     }
 
 
+    public function increment()
+    {
+        $memory = $this->getMemory();
+
+        $counter = (int) shmop_read($memory, 0, 10);
+        ++$counter;
+echo "\t++{$counter}\n";
+
+        shmop_write($memory, sprintf("%-10s", $counter), 0);
+        shmop_close($memory);
+    }
+
+
     /**
      * Get the exception details out of shared memory.
      *
@@ -55,7 +69,7 @@ final class SharedMemory
      */
     private function unserialize($memory): array
     {
-        $data = shmop_read($memory, 0, self::LIMIT);
+        $data = shmop_read($memory, 10, self::LIMIT);
 
         $exceptions = unserialize($data);
 
@@ -84,7 +98,7 @@ final class SharedMemory
 
         $data = serialize($exceptions);
 
-        shmop_write($memory, $data, 0);
+        shmop_write($memory, $data, 10);
         shmop_close($memory);
     }
 
@@ -100,10 +114,28 @@ final class SharedMemory
 
         $exceptions = $this->unserialize($memory);
 
-        shmop_write($memory, serialize([]), 0);
+        shmop_write($memory, serialize([]), 10);
 
         shmop_close($memory);
 
         return $exceptions;
+    }
+
+
+    public function __destruct()
+    {
+        $memory = $this->getMemory();
+
+        $counter = (int) shmop_read($memory, 0, 10);
+        --$counter;
+echo "\t--{$counter}\n";
+
+        if ($counter) {
+            shmop_write($memory, sprintf("%-10s", $counter), 0);
+        } else {
+            shmop_delete($memory);
+        }
+
+        shmop_close($memory);
     }
 }

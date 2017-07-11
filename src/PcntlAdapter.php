@@ -38,6 +38,8 @@ final class PcntlAdapter implements AdapterInterface
             throw new Exception("Failed to fork");
         }
 
+        $this->memory->increment();
+
         # If the child process was started then return its pid
         if ($pid) {
             return $pid;
