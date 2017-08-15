@@ -5,7 +5,7 @@ namespace duncan3dc\ForkerTests\Fork;
 use duncan3dc\Forker\AdapterInterface;
 use duncan3dc\Forker\Exception;
 use duncan3dc\Forker\Fork;
-use duncan3dc\Forker\SingleThreadAdapter;
+use duncan3dc\Forker\PcntlAdapter;
 use Mockery;
 use PHPUnit\Framework\TestCase;
 
@@ -151,5 +151,80 @@ class ForkTest extends TestCase
         $adapter->shouldReceive("cleanup")->once()->with();
 
         $this->fork->wait();
+    }
+
+    public function testMultipleWaits()
+    {
+        $duration = 10 ** 5;
+
+        $sleep = function () use ($duration) {
+            usleep($duration);
+        };
+
+
+        $sut = new Fork(new PcntlAdapter());
+        $time = microtime(true);
+
+        $pid = $sut->call($sleep);
+        $sut->wait($pid);
+
+        $pid = $sut->call($sleep);
+        $sut->wait($pid);
+        $actualDuration = microtime(true) - $time;
+        $expectedDuration = 2 * $duration / 10 ** 6;
+        $this->assertTrue(
+            $actualDuration > $expectedDuration,
+            "Process should wait for $expectedDuration sec, but only $actualDuration sec was waited"
+        );
+    }
+
+    public function testSingleWaitForMultipleProcesses()
+    {
+        $duration = 10 ** 5;
+
+        $sleep = function () use ($duration) {
+            usleep($duration);
+        };
+
+
+        $sut = new Fork(new PcntlAdapter());
+        $time = microtime(true);
+
+        foreach (range(0, 5) as $item) {
+            $sut->call($sleep);
+        }
+        $sut->wait();
+
+        $actualDuration = microtime(true) - $time;
+
+        $expectedDuration = $duration / 10 ** 6;
+        $this->assertTrue(
+            $actualDuration > $expectedDuration,
+            "Process should wait for $expectedDuration sec, but only $actualDuration sec was waited"
+        );
+
+        $this->assertTrue(
+            $actualDuration < 2 * $expectedDuration,
+            "Process should wait for near $expectedDuration sec, but $actualDuration sec was waited"
+        );
+    }
+
+    public function testProcessesThrowsExceptions()
+    {
+        $throw = function ($text, $code) {
+            throw new \RuntimeException($text, $code);
+        };
+        $sut = new Fork(new PcntlAdapter());
+
+        foreach (range(0, 5) as $item) {
+            $sut->call($throw, "Exception $item", $item);
+        }
+
+        try {
+            $sut->wait();
+            $this->fail("Exception should be thrown on errors in child processes");
+        } catch (Exception $e) {
+            $this->assertCount(8, explode("\n", $e->getMessage()));
+        }
     }
 }

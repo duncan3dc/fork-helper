@@ -14,24 +14,17 @@ final class PcntlAdapter implements AdapterInterface
 
 
     /**
-     * Create a new instance.
-     */
-    public function __construct()
-    {
-        $this->memory = new SharedMemory;
-    }
-
-
-    /**
      * Run some code in a thread.
      *
      * @param callable $func The function to execute
-     * @param mixed $args The arguments to pass to the function
+     * @param mixed    $args The arguments to pass to the function
      *
      * @return int The pid of the thread created to execute this code
+     * @throws Exception
      */
     public function call(callable $func, ...$args): int
     {
+        $memory = $this->allocateMemory();
         $pid = pcntl_fork();
 
         if ($pid == -1) {
@@ -47,7 +40,7 @@ final class PcntlAdapter implements AdapterInterface
         try {
             $func(...$args);
         } catch (\Throwable $e) {
-            $this->memory->addException($e);
+            $memory->addException($e);
             exit(1);
         }
 
@@ -88,9 +81,24 @@ final class PcntlAdapter implements AdapterInterface
      * Method to be called when the adapter is finished with.
      *
      * @return void
+     * @throws \LogicException
      */
     public function cleanup()
     {
+        if (!$this->memory) {
+            throw new \LogicException("Cleanup should be used after allocate.");
+        }
+
         $this->memory->delete();
+        $this->memory = null;
+    }
+
+    private function allocateMemory(): SharedMemory
+    {
+        if (!$this->memory) {
+            $this->memory = new SharedMemory();
+        }
+
+        return $this->memory;
     }
 }
