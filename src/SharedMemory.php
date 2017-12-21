@@ -116,7 +116,9 @@ final class SharedMemory
     public function delete()
     {
         $memory = shmop_open($this->key, "a", 0, 0);
-        shmop_delete($memory);
-        shmop_close($memory);
+        if ($memory) {
+            shmop_delete($memory);
+            shmop_close($memory);
+        }
     }
 }
