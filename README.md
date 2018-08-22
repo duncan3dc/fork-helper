@@ -6,9 +6,9 @@ Simple class to fork processes in PHP and allow multi-threading.
 Full documentation is available at https://duncan3dc.github.io/fork-helper/  
 PHPDoc API documentation is also available at [https://duncan3dc.github.io/fork-helper/api/](https://duncan3dc.github.io/fork-helper/api/namespaces/duncan3dc.Forker.html)  
 
-[![Latest Stable Version](https://poser.pugx.org/duncan3dc/fork-helper/version.svg)](https://packagist.org/packages/duncan3dc/fork-helper)
-[![Build Status](https://travis-ci.org/duncan3dc/fork-helper.svg?branch=master)](https://travis-ci.org/duncan3dc/fork-helper)
-[![Coverage Status](https://coveralls.io/repos/github/duncan3dc/fork-helper/badge.svg)](https://coveralls.io/github/duncan3dc/fork-helper)
+[![release](https://poser.pugx.org/duncan3dc/fork-helper/version.svg)](https://packagist.org/packages/duncan3dc/fork-helper)
+[![build](https://travis-ci.org/duncan3dc/fork-helper.svg?branch=master)](https://travis-ci.org/duncan3dc/fork-helper)
+[![coverage](https://codecov.io/gh/duncan3dc/fork-helper/graph/badge.svg)](https://codecov.io/gh/duncan3dc/fork-helper)
 
 
 Quick Example
