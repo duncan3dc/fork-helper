@@ -22,6 +22,7 @@ install:
 script:
   - vendor/bin/phpunit
   - tests/lint.sh
+  - vendor/bin/phpstan analyse --level=max src tests
 
 jobs:
   include:
