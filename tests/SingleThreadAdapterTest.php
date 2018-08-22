@@ -1,6 +1,6 @@
 <?php
 
-namespace duncan3dc\ForkerTests\Fork;
+namespace duncan3dc\ForkerTests;
 
 use duncan3dc\Forker\Exception;
 use duncan3dc\Forker\Fork;
