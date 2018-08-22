@@ -26,7 +26,7 @@ final class SharedMemory
         # Avoid creating 2 instances using the same memory segment
         usleep(1000);
 
-        $this->key = round(microtime(true) * 1000);
+        $this->key = (int) (microtime(true) * 1000);
 
         # Initialise the memory
         $memory = $this->getMemory();

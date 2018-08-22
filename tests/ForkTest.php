@@ -8,6 +8,7 @@ use duncan3dc\Forker\Fork;
 use duncan3dc\Forker\PcntlAdapter;
 use Mockery;
 use PHPUnit\Framework\TestCase;
+use function is_string;
 
 class ForkTest extends TestCase
 {
@@ -86,6 +87,7 @@ class ForkTest extends TestCase
         $this->getSimpleAdapter();
 
         $tmp = tempnam(sys_get_temp_dir(), "phpunit-fork-helper-");
+        $this->assertTrue(is_string($tmp));
 
         $this->fork->call(function ($tmp) {
             file_put_contents($tmp, "success!");
