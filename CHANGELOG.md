@@ -5,6 +5,14 @@ Changelog
 
 --------
 
+## 2.2.1 - 2018-08-22
+
+### Fixed
+
+* [SharedMemory] Fix shared memory allocation [#10](https://github.com/duncan3dc/fork-helper/pull/10).
+
+--------
+
 ## 2.2.0 - 2017-07-11
 
 ### Changed
