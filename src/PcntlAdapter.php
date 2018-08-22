@@ -8,7 +8,7 @@ namespace duncan3dc\Forker;
 final class PcntlAdapter implements AdapterInterface
 {
     /**
-     * @var SharedMemory $memory Caught exceptions from the threads.
+     * @var SharedMemory|null $memory Caught exceptions from the threads.
      */
     private $memory;
 
@@ -73,6 +73,10 @@ final class PcntlAdapter implements AdapterInterface
      */
     public function getExceptions(): array
     {
+        if (!$this->memory) {
+            return [];
+        }
+
         return $this->memory->getExceptions();
     }
 
