@@ -17,7 +17,7 @@ final class PcntlAdapter implements AdapterInterface
      * Run some code in a thread.
      *
      * @param callable $func The function to execute
-     * @param mixed    $args The arguments to pass to the function
+     * @param mixed ...$args The arguments to pass to the function
      *
      * @return int The pid of the thread created to execute this code
      * @throws Exception
