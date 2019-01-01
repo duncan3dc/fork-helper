@@ -42,7 +42,13 @@ final class SharedMemory
      */
     private function getMemory()
     {
-        return shmop_open($this->key, "c", 0644, self::LIMIT);
+        $memory = shmop_open($this->key, "c", 0644, self::LIMIT);
+
+        if (!$memory) {
+            throw new Exception("Unable to open the shared memory block");
+        }
+
+        return $memory;
     }
 
 

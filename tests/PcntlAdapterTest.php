@@ -6,6 +6,8 @@ use duncan3dc\Forker\Exception;
 use duncan3dc\Forker\Fork;
 use duncan3dc\Forker\PcntlAdapter;
 use PHPUnit\Framework\TestCase;
+use function assert;
+use function is_resource;
 
 class PcntlAdapterTest extends TestCase
 {
@@ -25,6 +27,7 @@ class PcntlAdapterTest extends TestCase
 
         $writeToMemory = function ($string) use (&$output, $memoryKey, $memoryLimit) {
             $memory = shmop_open($memoryKey, "c", 0644, $memoryLimit);
+            assert(is_resource($memory));
             $output = shmop_read($memory, 0, $memoryLimit);
             if ($output = trim($output)) {
                 $output .= "\n";
@@ -54,6 +57,7 @@ class PcntlAdapterTest extends TestCase
         $writeToMemory("end");
 
         $memory = shmop_open($memoryKey, "a", 0, 0);
+        assert(is_resource($memory));
         $output = trim(shmop_read($memory, 0, $memoryLimit));
         shmop_delete($memory);
         shmop_close($memory);
