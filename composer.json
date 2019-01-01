@@ -32,5 +32,13 @@
     },
     "autoload-dev": {
         "psr-4": {"duncan3dc\\ForkerTests\\": "tests/"}
+    },
+    "scripts": {
+        "test": [
+            "vendor/bin/phpunit",
+            "vendor/bin/phpstan analyse --level=max src tests",
+            "vendor/bin/phpcs --standard=phpcs.xml src tests",
+            "@composer validate --strict"
+        ]
     }
 }
