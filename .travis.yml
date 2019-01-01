@@ -20,14 +20,18 @@ install:
 
 script:
   - vendor/bin/phpunit
-  - vendor/bin/phpstan analyse --level=max src tests
 
 jobs:
   include:
-  - stage: coverage
-    script:
-    - vendor/bin/phpunit --coverage-clover=coverage.xml
-    - bash <(curl -s https://codecov.io/bash)
+
+    - stage: code quality
+      script:
+        - vendor/bin/phpstan analyse --level=max src tests
+
+    - stage: coverage
+      script:
+        - vendor/bin/phpunit --coverage-clover=coverage.xml
+        - bash <(curl -s https://codecov.io/bash)
 
 git:
   depth: 5
