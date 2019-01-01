@@ -15,7 +15,7 @@ class SharedMemoryTest extends TestCase
     {
         error_reporting(\E_ALL);
 
-        $memory = new SharedMemory;
+        $memory = new SharedMemory();
         $this->memory = new Intruder($memory);
     }
 
@@ -35,8 +35,8 @@ class SharedMemoryTest extends TestCase
         error_reporting(0);
 
         # Ensure that two instances are not given the same key
-        $memory1 = new SharedMemory;
-        $memory2 = new SharedMemory;
+        $memory1 = new SharedMemory();
+        $memory2 = new SharedMemory();
 
         $key1 = (new Intruder($memory1))->key;
         $key2 = (new Intruder($memory2))->key;

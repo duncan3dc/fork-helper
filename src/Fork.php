@@ -27,9 +27,9 @@ class Fork
     {
         if ($adapter === null) {
             if (function_exists("pcntl_fork")) {
-                $adapter = new PcntlAdapter;
+                $adapter = new PcntlAdapter();
             } else {
-                $adapter = new SingleThreadAdapter;
+                $adapter = new SingleThreadAdapter();
             }
         }
 

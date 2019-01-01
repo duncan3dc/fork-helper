@@ -24,6 +24,10 @@ script:
 jobs:
   include:
 
+    - stage: coding standards
+      script:
+        - vendor/bin/phpcs --standard=phpcs.xml src tests
+
     - stage: code quality
       script:
         - vendor/bin/phpstan analyse --level=max src tests

@@ -14,7 +14,7 @@ class SingleThreadAdapterTest extends TestCase
 
     public function setUp()
     {
-        $this->adapter = new SingleThreadAdapter;
+        $this->adapter = new SingleThreadAdapter();
         $this->fork = new Fork($this->adapter);
     }
 

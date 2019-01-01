@@ -15,7 +15,7 @@ class PcntlAdapterTest extends TestCase
 
     public function setUp()
     {
-        $this->fork = new Fork(new PcntlAdapter);
+        $this->fork = new Fork(new PcntlAdapter());
     }
 
 
