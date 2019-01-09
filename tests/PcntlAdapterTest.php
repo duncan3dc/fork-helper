@@ -4,6 +4,7 @@ namespace duncan3dc\ForkerTests;
 
 use duncan3dc\Forker\Exception;
 use duncan3dc\Forker\Fork;
+use duncan3dc\Forker\Interfaces\ForkInterface;
 use duncan3dc\Forker\PcntlAdapter;
 use PHPUnit\Framework\TestCase;
 use function assert;
@@ -11,6 +12,7 @@ use function is_resource;
 
 class PcntlAdapterTest extends TestCase
 {
+    /** @var ForkInterface */
     private $fork;
 
     public function setUp()

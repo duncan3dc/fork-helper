@@ -2,10 +2,12 @@
 
 namespace duncan3dc\Forker;
 
+use duncan3dc\Forker\Interfaces\ForkInterface;
+
 /**
  * Class to make multi-threaded processes easier.
  */
-class Fork
+class Fork implements ForkInterface
 {
     /**
      * @var AdapterInterface $adapter The adapter to handle the code execution.
@@ -38,12 +40,7 @@ class Fork
 
 
     /**
-     * Run some code in a thread.
-     *
-     * @param callable $func The function to execute
-     * @param mixed ...$args The arguments to pass to the function
-     *
-     * @return int The pid of the thread created to execute this code
+     * @inheritdoc
      */
     public function call(callable $func, ...$args): int
     {
@@ -56,13 +53,9 @@ class Fork
 
 
     /**
-     * Wait for the processes started via call().
-     *
-     * @param int $pid The pid to wait for, if none is passed then all threads created by this object will be waited for
-     *
-     * @return $this
+     * @inheritdoc
      */
-    public function wait(int $pid = null): self
+    public function wait(int $pid = null): ForkInterface
     {
         if ($pid) {
             $threads = [$pid];
@@ -98,9 +91,7 @@ class Fork
 
 
     /**
-     * Get forks' PIDs.
-     *
-     * @return int[]
+     * @inheritdoc
      */
     public function getPIDs(): array
     {

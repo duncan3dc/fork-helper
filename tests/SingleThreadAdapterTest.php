@@ -2,15 +2,21 @@
 
 namespace duncan3dc\ForkerTests;
 
+use duncan3dc\Forker\AdapterInterface;
 use duncan3dc\Forker\Exception;
 use duncan3dc\Forker\Fork;
+use duncan3dc\Forker\Interfaces\ForkInterface;
 use duncan3dc\Forker\SingleThreadAdapter;
 use PHPUnit\Framework\TestCase;
 
 class SingleThreadAdapterTest extends TestCase
 {
+    /** @var AdapterInterface */
     private $adapter;
+
+    /** @var ForkInterface */
     private $fork;
+
 
     public function setUp()
     {
