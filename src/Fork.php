@@ -55,6 +55,25 @@ class Fork implements ForkInterface
     /**
      * @inheritdoc
      */
+    public function isRunning(int $pid): bool
+    {
+        if (!array_key_exists($pid, $this->threads)) {
+            return false;
+        }
+
+        $running = $this->adapter->isRunning($pid);
+
+        if (!$running) {
+            unset($this->threads[$pid]);
+        }
+
+        return $running;
+    }
+
+
+    /**
+     * @inheritdoc
+     */
     public function wait(int $pid = null): ForkInterface
     {
         if ($pid) {

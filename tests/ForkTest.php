@@ -40,6 +40,10 @@ class ForkTest extends TestCase
                 $func(...$args);
                 return rand(1, 999);
             }
+            public function isRunning(int $pid): bool
+            {
+                return false;
+            }
             public function wait(int $pid): int
             {
                 return 0;
@@ -108,6 +112,42 @@ class ForkTest extends TestCase
         $this->fork->call(function ($line1, $line2) {
             echo "{$line1}\n{$line2}";
         }, "value1", "value2");
+    }
+
+
+    public function testIsRunning1()
+    {
+        $adapter = $this->getMockAdapter();
+
+        $adapter->shouldReceive("call")->once()->with("sleep")->andReturn(123);
+        $this->fork->call("sleep");
+
+        $adapter->shouldReceive("isRunning")->once()->with(123)->andReturn(true);
+        $this->assertTrue($this->fork->isRunning(123));
+
+        $this->assertSame([123], $this->fork->getPIDs());
+    }
+
+
+    public function testIsRunning2()
+    {
+        $adapter = $this->getMockAdapter();
+
+        $adapter->shouldReceive("call")->once()->with("sleep")->andReturn(123);
+        $this->fork->call("sleep");
+
+        $adapter->shouldReceive("isRunning")->once()->with(123)->andReturn(false);
+        $this->assertFalse($this->fork->isRunning(123));
+
+        $this->assertSame([], $this->fork->getPIDs());
+    }
+
+
+    public function testIsRunning3()
+    {
+        $this->getMockAdapter();
+
+        $this->assertFalse($this->fork->isRunning(123));
     }
 
 

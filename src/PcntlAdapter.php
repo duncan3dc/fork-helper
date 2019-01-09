@@ -50,6 +50,17 @@ final class PcntlAdapter implements AdapterInterface
 
 
     /**
+     * @inheritdoc
+     */
+    public function isRunning(int $pid): bool
+    {
+        $result = pcntl_waitpid($pid, $status, \WNOHANG);
+
+        return ($result === 0);
+    }
+
+
+    /**
      * Wait for the a thread started via call() to end.
      *
      * @param int $pid The pid to wait for

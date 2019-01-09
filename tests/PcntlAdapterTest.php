@@ -88,4 +88,32 @@ class PcntlAdapterTest extends TestCase
         $result = $this->fork->wait();
         $this->assertSame($this->fork, $result);
     }
+
+
+    public function testIsRunning1()
+    {
+        $pid = $this->fork->call("usleep", 10000);
+        $this->assertTrue($this->fork->isRunning($pid));
+        $this->assertSame([$pid], $this->fork->getPIDs());
+
+        $this->fork->wait();
+    }
+
+
+    public function testIsRunning2()
+    {
+        $pid = $this->fork->call("usleep", 100);
+
+        usleep(100000);
+        $this->assertFalse($this->fork->isRunning($pid));
+        $this->assertSame([], $this->fork->getPIDs());
+
+        $this->fork->wait();
+    }
+
+
+    public function testIsRunning3()
+    {
+        $this->assertFalse($this->fork->isRunning(123));
+    }
 }

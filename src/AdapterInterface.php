@@ -15,6 +15,14 @@ interface AdapterInterface
      */
     public function call(callable $func, ...$args): int;
 
+    /**
+     * Check if a thread is running.
+     *
+     * @param int $pid
+     *
+     * @return bool
+     */
+    public function isRunning(int $pid): bool;
 
     /**
      * Wait for the a thread started via call() to end.

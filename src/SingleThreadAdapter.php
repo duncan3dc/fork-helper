@@ -49,6 +49,15 @@ final class SingleThreadAdapter implements AdapterInterface
 
 
     /**
+     * @inheritdoc
+     */
+    public function isRunning(int $pid): bool
+    {
+        return false;
+    }
+
+
+    /**
      * Wait for the a thread started via call() to end.
      *
      * @param int $pid The pid to wait for

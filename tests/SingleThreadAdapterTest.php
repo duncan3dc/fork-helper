@@ -113,4 +113,22 @@ class SingleThreadAdapterTest extends TestCase
         $this->assertInstanceOf(\DomainException::class, $exceptions[1]);
         $this->assertSame("Fail", $exceptions[1]->getMessage());
     }
+
+
+
+
+    public function testIsRunning1()
+    {
+        $pid = $this->fork->call("usleep", 10000);
+        $this->assertFalse($this->fork->isRunning($pid));
+        $this->assertSame([], $this->fork->getPIDs());
+
+        $this->fork->wait();
+    }
+
+
+    public function testIsRunning2()
+    {
+        $this->assertFalse($this->fork->isRunning(123));
+    }
 }
