@@ -5,6 +5,21 @@ Changelog
 
 --------
 
+## 2.3.0 - 2019-01-10
+
+### Added
+
+* [Threads] A new class to allow a maximum number of threads to be used.
+* [Forking] An `isRunning()` method to check if a child process is running or not.
+* [ForkInterface] Created an interface for the main `Fork` class.
+
+### Changed
+
+* [Support] Added support for PHP 7.2 and 7.3.
+* [Support] Dropped support for PHP 7.0.
+
+--------
+
 ## 2.2.1 - 2018-08-22
 
 ### Fixed
