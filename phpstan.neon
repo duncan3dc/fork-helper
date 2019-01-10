@@ -1,6 +1,8 @@
 parameters:
 	ignoreErrors:
 		- '/Access to an undefined property duncan3dc\\ObjectIntruder\\Intruder::/'
+		- '/Negated boolean is always false/'
+		- '/If condition is always true/'
 
 includes:
 	- vendor/phpstan/phpstan-mockery/extension.neon
