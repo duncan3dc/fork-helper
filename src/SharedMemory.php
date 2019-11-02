@@ -10,7 +10,7 @@ final class SharedMemory
     /**
      * How much shared memory to allocate.
      */
-    const LIMIT = 1000;
+    private const LIMIT = 1000;
 
     /**
      * @var int $key The key to use.
