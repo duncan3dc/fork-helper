@@ -3,6 +3,7 @@
 namespace duncan3dc\Forker;
 
 use duncan3dc\Forker\Interfaces\ForkInterface;
+
 use function count;
 
 /**

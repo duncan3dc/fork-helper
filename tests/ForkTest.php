@@ -9,6 +9,7 @@ use duncan3dc\Forker\Interfaces\ForkInterface;
 use duncan3dc\Forker\PcntlAdapter;
 use Mockery;
 use PHPUnit\Framework\TestCase;
+
 use function is_string;
 
 class ForkTest extends TestCase

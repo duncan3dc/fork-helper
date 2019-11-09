@@ -7,6 +7,7 @@ use duncan3dc\Forker\Fork;
 use duncan3dc\Forker\Interfaces\ForkInterface;
 use duncan3dc\Forker\PcntlAdapter;
 use PHPUnit\Framework\TestCase;
+
 use function assert;
 use function is_resource;
 
