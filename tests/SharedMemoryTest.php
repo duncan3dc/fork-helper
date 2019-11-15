@@ -13,7 +13,7 @@ class SharedMemoryTest extends TestCase
 
     public function setUp()
     {
-        error_reporting(\E_ALL);
+        \error_reporting(\E_ALL);
 
         $memory = new SharedMemory();
         $this->memory = new Intruder($memory);
@@ -32,7 +32,7 @@ class SharedMemoryTest extends TestCase
     public function testConstructor()
     {
         # Avoid warning/notices
-        error_reporting(0);
+        \error_reporting(0);
 
         # Ensure that two instances are not given the same key
         $memory1 = new SharedMemory();
@@ -60,7 +60,7 @@ class SharedMemoryTest extends TestCase
 
         $exceptions = $this->memory->getExceptions();
 
-        $this->assertSame(1, count($exceptions));
+        $this->assertSame(1, \count($exceptions));
 
         $this->assertStringMatchesFormat("RuntimeException: Whoops (%s:%i)", $exceptions[0]);
     }
@@ -73,7 +73,7 @@ class SharedMemoryTest extends TestCase
 
         $exceptions = $this->memory->getExceptions();
 
-        $this->assertSame(2, count($exceptions));
+        $this->assertSame(2, \count($exceptions));
 
         $this->assertStringMatchesFormat("RuntimeException: Whoops (%s:%i)", $exceptions[0]);
         $this->assertStringMatchesFormat("DomainException: Nope (%s:%s)", $exceptions[1]);
@@ -84,15 +84,15 @@ class SharedMemoryTest extends TestCase
     {
         $this->memory->addException(new \RuntimeException("Whoops"));
         $exceptions = $this->memory->getExceptions();
-        $this->assertSame(1, count($exceptions));
+        $this->assertSame(1, \count($exceptions));
         $this->assertStringMatchesFormat("RuntimeException: Whoops (%s:%i)", $exceptions[0]);
 
         $exceptions = $this->memory->getExceptions();
-        $this->assertSame(0, count($exceptions));
+        $this->assertSame(0, \count($exceptions));
 
         $this->memory->addException(new \DomainException("Nope"));
         $exceptions = $this->memory->getExceptions();
-        $this->assertSame(1, count($exceptions));
+        $this->assertSame(1, \count($exceptions));
         $this->assertStringMatchesFormat("DomainException: Nope (%s:%s)", $exceptions[0]);
     }
 
@@ -107,6 +107,6 @@ class SharedMemoryTest extends TestCase
         # Make sure the memory has been cleaned up by attempting to access it
         $this->expectException(Error::class);
         $this->expectExceptionMessage("shmop_open(): unable to attach or create shared memory segment 'No such file or directory'");
-        shmop_open($key, "a", 0, 0);
+        \shmop_open($key, "a", 0, 0);
     }
 }

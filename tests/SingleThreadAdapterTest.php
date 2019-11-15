@@ -79,7 +79,7 @@ class SingleThreadAdapterTest extends TestCase
         $this->assertSame(256, $status);
 
         $exceptions = $this->adapter->getExceptions();
-        $this->assertSame(1, count($exceptions));
+        $this->assertSame(1, \count($exceptions));
         $this->assertInstanceOf(\RuntimeException::class, $exceptions[0]);
         $this->assertSame("Test", $exceptions[0]->getMessage());
     }
@@ -107,7 +107,7 @@ class SingleThreadAdapterTest extends TestCase
         $this->assertSame(256, $status);
 
         $exceptions = $this->adapter->getExceptions();
-        $this->assertSame(2, count($exceptions));
+        $this->assertSame(2, \count($exceptions));
         $this->assertInstanceOf(\InvalidArgumentException::class, $exceptions[0]);
         $this->assertSame("Nope", $exceptions[0]->getMessage());
         $this->assertInstanceOf(\DomainException::class, $exceptions[1]);

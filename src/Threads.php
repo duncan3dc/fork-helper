@@ -39,7 +39,7 @@ final class Threads implements ForkInterface
      */
     public function call(callable $func, ...$args): int
     {
-        if (count($this->getPIDs()) >= $this->limit) {
+        if (\count($this->getPIDs()) >= $this->limit) {
             $this->waitForAnyThread();
         }
 
@@ -92,7 +92,7 @@ final class Threads implements ForkInterface
             }
 
             # If none of the threads have finished let, wait for a second before checking again
-            sleep(1);
+            \sleep(1);
         }
     }
 }

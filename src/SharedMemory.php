@@ -24,14 +24,14 @@ final class SharedMemory
     public function __construct()
     {
         # Avoid creating 2 instances using the same memory segment
-        usleep(1000);
+        \usleep(1000);
 
-        $this->key = (int) (microtime(true) * 1000);
+        $this->key = (int) (\microtime(true) * 1000);
 
         # Initialise the memory
         $memory = $this->getMemory();
-        shmop_write($memory, serialize([]), 0);
-        shmop_close($memory);
+        \shmop_write($memory, \serialize([]), 0);
+        \shmop_close($memory);
     }
 
 
@@ -42,7 +42,7 @@ final class SharedMemory
      */
     private function getMemory()
     {
-        $memory = shmop_open($this->key, "c", 0644, self::LIMIT);
+        $memory = \shmop_open($this->key, "c", 0644, self::LIMIT);
 
         if (!$memory) {
             throw new Exception("Unable to open the shared memory block");
@@ -61,11 +61,11 @@ final class SharedMemory
      */
     private function unserialize($memory): array
     {
-        $data = shmop_read($memory, 0, self::LIMIT);
+        $data = \shmop_read($memory, 0, self::LIMIT);
 
-        $exceptions = unserialize($data);
+        $exceptions = \unserialize($data);
 
-        if (!is_array($exceptions)) {
+        if (!\is_array($exceptions)) {
             $exceptions = [];
         }
 
@@ -86,12 +86,12 @@ final class SharedMemory
 
         $exceptions = $this->unserialize($memory);
 
-        $exceptions[] = get_class($exception) . ": " . $exception->getMessage() . " (" . $exception->getFile() . ":" . $exception->getLine() . ")";
+        $exceptions[] = \get_class($exception) . ": " . $exception->getMessage() . " (" . $exception->getFile() . ":" . $exception->getLine() . ")";
 
-        $data = serialize($exceptions);
+        $data = \serialize($exceptions);
 
-        shmop_write($memory, $data, 0);
-        shmop_close($memory);
+        \shmop_write($memory, $data, 0);
+        \shmop_close($memory);
     }
 
 
@@ -106,9 +106,9 @@ final class SharedMemory
 
         $exceptions = $this->unserialize($memory);
 
-        shmop_write($memory, serialize([]), 0);
+        \shmop_write($memory, \serialize([]), 0);
 
-        shmop_close($memory);
+        \shmop_close($memory);
 
         return $exceptions;
     }
@@ -121,10 +121,10 @@ final class SharedMemory
      */
     public function delete()
     {
-        $memory = shmop_open($this->key, "a", 0, 0);
+        $memory = \shmop_open($this->key, "a", 0, 0);
         if ($memory) {
-            shmop_delete($memory);
-            shmop_close($memory);
+            \shmop_delete($memory);
+            \shmop_close($memory);
         }
     }
 }

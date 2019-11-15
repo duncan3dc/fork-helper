@@ -28,7 +28,7 @@ class Fork implements ForkInterface
     public function __construct(AdapterInterface $adapter = null)
     {
         if ($adapter === null) {
-            if (function_exists("pcntl_fork")) {
+            if (\function_exists("pcntl_fork")) {
                 $adapter = new PcntlAdapter();
             } else {
                 $adapter = new SingleThreadAdapter();
@@ -57,7 +57,7 @@ class Fork implements ForkInterface
      */
     public function isRunning(int $pid): bool
     {
-        if (!array_key_exists($pid, $this->threads)) {
+        if (!\array_key_exists($pid, $this->threads)) {
             return false;
         }
 
@@ -114,6 +114,6 @@ class Fork implements ForkInterface
      */
     public function getPIDs(): array
     {
-        return array_values($this->threads);
+        return \array_values($this->threads);
     }
 }

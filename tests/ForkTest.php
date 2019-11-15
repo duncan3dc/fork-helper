@@ -38,7 +38,7 @@ class ForkTest extends TestCase
             public function call(callable $func, ...$args): int
             {
                 $func(...$args);
-                return rand(1, 999);
+                return \rand(1, 999);
             }
             public function isRunning(int $pid): bool
             {
@@ -92,14 +92,14 @@ class ForkTest extends TestCase
     {
         $this->getSimpleAdapter();
 
-        $tmp = tempnam(sys_get_temp_dir(), "phpunit-fork-helper-");
-        $this->assertTrue(is_string($tmp));
+        $tmp = \tempnam(\sys_get_temp_dir(), "phpunit-fork-helper-");
+        $this->assertTrue(\is_string($tmp));
 
         $this->fork->call(function ($tmp) {
-            file_put_contents($tmp, "success!");
+            \file_put_contents($tmp, "success!");
         }, $tmp);
 
-        $this->assertSame("success!", file_get_contents($tmp));
+        $this->assertSame("success!", \file_get_contents($tmp));
     }
 
 
@@ -169,7 +169,7 @@ class ForkTest extends TestCase
         $pids[] = $this->fork->call("phpversion");
         $pids[] = $this->fork->call("phpversion");
 
-        $pid = array_shift($pids);
+        $pid = \array_shift($pids);
 
         $result = $this->fork->wait($pid);
         $this->assertSame($this->fork, $result);
@@ -202,19 +202,19 @@ class ForkTest extends TestCase
         $duration = 10 ** 5;
 
         $sleep = function () use ($duration) {
-            usleep($duration);
+            \usleep($duration);
         };
 
 
         $sut = new Fork(new PcntlAdapter());
-        $time = microtime(true);
+        $time = \microtime(true);
 
         $pid = $sut->call($sleep);
         $sut->wait($pid);
 
         $pid = $sut->call($sleep);
         $sut->wait($pid);
-        $actualDuration = microtime(true) - $time;
+        $actualDuration = \microtime(true) - $time;
         $expectedDuration = 2 * $duration / 10 ** 6;
         $this->assertTrue(
             $actualDuration > $expectedDuration,
@@ -227,19 +227,19 @@ class ForkTest extends TestCase
         $duration = 10 ** 5;
 
         $sleep = function () use ($duration) {
-            usleep($duration);
+            \usleep($duration);
         };
 
 
         $sut = new Fork(new PcntlAdapter());
-        $time = microtime(true);
+        $time = \microtime(true);
 
-        foreach (range(0, 5) as $item) {
+        foreach (\range(0, 5) as $item) {
             $sut->call($sleep);
         }
         $sut->wait();
 
-        $actualDuration = microtime(true) - $time;
+        $actualDuration = \microtime(true) - $time;
 
         $expectedDuration = $duration / 10 ** 6;
         $this->assertTrue(
@@ -260,7 +260,7 @@ class ForkTest extends TestCase
         };
         $sut = new Fork(new PcntlAdapter());
 
-        foreach (range(0, 5) as $item) {
+        foreach (\range(0, 5) as $item) {
             $sut->call($throw, "Exception $item", $item);
         }
 
@@ -268,7 +268,7 @@ class ForkTest extends TestCase
             $sut->wait();
             $this->fail("Exception should be thrown on errors in child processes");
         } catch (Exception $e) {
-            $this->assertCount(8, explode("\n", $e->getMessage()));
+            $this->assertCount(8, \explode("\n", $e->getMessage()));
         }
     }
 }
