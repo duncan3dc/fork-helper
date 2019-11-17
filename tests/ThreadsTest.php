@@ -17,14 +17,14 @@ class ThreadsTest extends TestCase
     private $fork;
 
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->fork = Mockery::mock(ForkInterface::class);
         $this->threads = new Threads(3, $this->fork);
     }
 
 
-    public function testCall1()
+    public function testCall1(): void
     {
         $this->fork->shouldReceive("getPIDs")->once()->with()->andReturn([]);
         $this->fork->shouldReceive("call")->once()->with("sleep", 1)->andReturn(77);
@@ -33,7 +33,7 @@ class ThreadsTest extends TestCase
     }
 
 
-    public function testCall2()
+    public function testCall2(): void
     {
         # Simulate the maximum number of threads being in use
         $this->fork->shouldReceive("getPIDs")->once()->with()->andReturn([1, 2, 3]);
@@ -47,7 +47,7 @@ class ThreadsTest extends TestCase
     }
 
 
-    public function testCall3()
+    public function testCall3(): void
     {
         # Simulate the maximum number of threads being in use
         $this->fork->shouldReceive("getPIDs")->once()->with()->andReturn([1, 2, 3]);
@@ -64,7 +64,7 @@ class ThreadsTest extends TestCase
     }
 
 
-    public function testIsRunning1()
+    public function testIsRunning1(): void
     {
         $this->fork->shouldReceive("isRunning")->once()->with(456)->andReturn(true);
         $result = $this->threads->isRunning(456);
@@ -72,7 +72,7 @@ class ThreadsTest extends TestCase
     }
 
 
-    public function testIsRunning2()
+    public function testIsRunning2(): void
     {
         $this->fork->shouldReceive("isRunning")->once()->with(456)->andReturn(false);
         $result = $this->threads->isRunning(456);
@@ -80,7 +80,7 @@ class ThreadsTest extends TestCase
     }
 
 
-    public function testWait1()
+    public function testWait1(): void
     {
         $this->fork->shouldReceive("wait")->once()->with(123)->andReturn($this->fork);
         $result = $this->threads->wait(123);
@@ -88,7 +88,7 @@ class ThreadsTest extends TestCase
     }
 
 
-    public function testWait2()
+    public function testWait2(): void
     {
         $this->fork->shouldReceive("wait")->once()->with(null)->andReturn($this->fork);
         $result = $this->threads->wait();
@@ -96,7 +96,7 @@ class ThreadsTest extends TestCase
     }
 
 
-    public function testGetPIDs()
+    public function testGetPIDs(): void
     {
         $this->fork->shouldReceive("getPids")->once()->with()->andReturn([1, 2, 3]);
         $result = $this->threads->getPIDs();

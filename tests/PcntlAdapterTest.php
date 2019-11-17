@@ -16,13 +16,13 @@ class PcntlAdapterTest extends TestCase
     /** @var ForkInterface */
     private $fork;
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->fork = new Fork(new PcntlAdapter());
     }
 
 
-    public function testOutput()
+    public function testOutput(): void
     {
         $output = "";
         $memoryKey = ftok(__FILE__, "t");
@@ -69,7 +69,7 @@ class PcntlAdapterTest extends TestCase
     }
 
 
-    public function testException()
+    public function testException(): void
     {
         $this->expectException(Exception::class);
         $this->expectExceptionMessage("An error occurred within a thread, the return code was: 256\n  - InvalidArgumentException: Extra");
@@ -82,7 +82,7 @@ class PcntlAdapterTest extends TestCase
     }
 
 
-    public function testNoException()
+    public function testNoException(): void
     {
         $this->fork->call("phpversion");
 
@@ -91,7 +91,7 @@ class PcntlAdapterTest extends TestCase
     }
 
 
-    public function testIsRunning1()
+    public function testIsRunning1(): void
     {
         $pid = $this->fork->call("usleep", 10000);
         $this->assertTrue($this->fork->isRunning($pid));
@@ -101,7 +101,7 @@ class PcntlAdapterTest extends TestCase
     }
 
 
-    public function testIsRunning2()
+    public function testIsRunning2(): void
     {
         $pid = $this->fork->call("usleep", 100);
 
@@ -113,7 +113,7 @@ class PcntlAdapterTest extends TestCase
     }
 
 
-    public function testIsRunning3()
+    public function testIsRunning3(): void
     {
         $this->assertFalse($this->fork->isRunning(123));
     }

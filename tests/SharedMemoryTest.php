@@ -11,7 +11,7 @@ class SharedMemoryTest extends TestCase
 {
     private $memory;
 
-    public function setUp()
+    public function setUp(): void
     {
         error_reporting(\E_ALL);
 
@@ -20,7 +20,7 @@ class SharedMemoryTest extends TestCase
     }
 
 
-    public function tearDown()
+    public function tearDown(): void
     {
         try {
             $this->memory->delete();
@@ -29,7 +29,7 @@ class SharedMemoryTest extends TestCase
     }
 
 
-    public function testConstructor()
+    public function testConstructor(): void
     {
         # Avoid warning/notices
         error_reporting(0);
@@ -48,13 +48,13 @@ class SharedMemoryTest extends TestCase
     }
 
 
-    public function testNoExceptions()
+    public function testNoExceptions(): void
     {
         $this->assertSame([], $this->memory->getExceptions());
     }
 
 
-    public function testOneException()
+    public function testOneException(): void
     {
         $this->memory->addException(new \RuntimeException("Whoops"));
 
@@ -66,7 +66,7 @@ class SharedMemoryTest extends TestCase
     }
 
 
-    public function testMultipleExceptions()
+    public function testMultipleExceptions(): void
     {
         $this->memory->addException(new \RuntimeException("Whoops"));
         $this->memory->addException(new \DomainException("Nope"));
@@ -80,7 +80,7 @@ class SharedMemoryTest extends TestCase
     }
 
 
-    public function testRetrievedExceptions()
+    public function testRetrievedExceptions(): void
     {
         $this->memory->addException(new \RuntimeException("Whoops"));
         $exceptions = $this->memory->getExceptions();
@@ -97,7 +97,7 @@ class SharedMemoryTest extends TestCase
     }
 
 
-    public function testDelete()
+    public function testDelete(): void
     {
         # Get the shared memory key that the instance is using
         $key = $this->memory->key;

@@ -18,14 +18,14 @@ class SingleThreadAdapterTest extends TestCase
     private $fork;
 
 
-    public function setUp()
+    public function setUp(): void
     {
         $this->adapter = new SingleThreadAdapter();
         $this->fork = new Fork($this->adapter);
     }
 
 
-    public function testOutput()
+    public function testOutput(): void
     {
         $this->expectOutputString("func1.1\nfunc1.2\nfunc2.1\nfunc2.2\nwaiting\nend");
 
@@ -46,7 +46,7 @@ class SingleThreadAdapterTest extends TestCase
     }
 
 
-    public function testException()
+    public function testException(): void
     {
         $this->expectException(Exception::class);
         $this->expectExceptionMessage("An error occurred within a thread, the return code was: 256\n  - InvalidArgumentException: Test");
@@ -59,7 +59,7 @@ class SingleThreadAdapterTest extends TestCase
     }
 
 
-    public function testWait()
+    public function testWait(): void
     {
         $pid = $this->adapter->call("phpversion");
 
@@ -69,7 +69,7 @@ class SingleThreadAdapterTest extends TestCase
     }
 
 
-    public function testCatchException()
+    public function testCatchException(): void
     {
         $pid = $this->adapter->call(function () {
             throw new \RuntimeException("Test");
@@ -85,7 +85,7 @@ class SingleThreadAdapterTest extends TestCase
     }
 
 
-    public function testCatchExceptionsAndHandleSuccess()
+    public function testCatchExceptionsAndHandleSuccess(): void
     {
         $pid1 = $this->adapter->call(function () {
             throw new \InvalidArgumentException("Nope");
@@ -117,7 +117,7 @@ class SingleThreadAdapterTest extends TestCase
 
 
 
-    public function testIsRunning1()
+    public function testIsRunning1(): void
     {
         $pid = $this->fork->call("usleep", 10000);
         $this->assertFalse($this->fork->isRunning($pid));
@@ -127,7 +127,7 @@ class SingleThreadAdapterTest extends TestCase
     }
 
 
-    public function testIsRunning2()
+    public function testIsRunning2(): void
     {
         $this->assertFalse($this->fork->isRunning(123));
     }

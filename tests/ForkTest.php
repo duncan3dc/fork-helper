@@ -8,6 +8,7 @@ use duncan3dc\Forker\Fork;
 use duncan3dc\Forker\Interfaces\ForkInterface;
 use duncan3dc\Forker\PcntlAdapter;
 use Mockery;
+use Mockery\MockInterface;
 use PHPUnit\Framework\TestCase;
 
 use function is_string;
@@ -18,13 +19,16 @@ class ForkTest extends TestCase
     private $fork;
 
 
-    public function tearDown()
+    public function tearDown(): void
     {
         Mockery::close();
     }
 
 
-    private function getMockAdapter()
+    /**
+     * @return AdapterInterface&MockInterface
+     */
+    private function getMockAdapter(): AdapterInterface
     {
         $adapter = Mockery::mock(AdapterInterface::class);
         $this->fork = new Fork($adapter);
@@ -33,7 +37,7 @@ class ForkTest extends TestCase
     }
 
 
-    private function getSimpleAdapter()
+    private function getSimpleAdapter(): void
     {
         $adapter = new class implements AdapterInterface {
             public function call(callable $func, ...$args): int
@@ -62,7 +66,7 @@ class ForkTest extends TestCase
     }
 
 
-    public function testCallReturnsPID()
+    public function testCallReturnsPID(): void
     {
         $adapter = $this->getMockAdapter();
 
@@ -77,7 +81,7 @@ class ForkTest extends TestCase
     }
 
 
-    public function testNoExceptionMock()
+    public function testNoExceptionMock(): void
     {
         $adapter = $this->getMockAdapter();
 
@@ -89,7 +93,7 @@ class ForkTest extends TestCase
     }
 
 
-    public function testNoExceptionSimple()
+    public function testNoExceptionSimple(): void
     {
         $this->getSimpleAdapter();
 
@@ -104,7 +108,7 @@ class ForkTest extends TestCase
     }
 
 
-    public function testCallArguments()
+    public function testCallArguments(): void
     {
         $this->getSimpleAdapter();
 
@@ -116,7 +120,7 @@ class ForkTest extends TestCase
     }
 
 
-    public function testIsRunning1()
+    public function testIsRunning1(): void
     {
         $adapter = $this->getMockAdapter();
 
@@ -130,7 +134,7 @@ class ForkTest extends TestCase
     }
 
 
-    public function testIsRunning2()
+    public function testIsRunning2(): void
     {
         $adapter = $this->getMockAdapter();
 
@@ -144,7 +148,7 @@ class ForkTest extends TestCase
     }
 
 
-    public function testIsRunning3()
+    public function testIsRunning3(): void
     {
         $this->getMockAdapter();
 
@@ -152,7 +156,7 @@ class ForkTest extends TestCase
     }
 
 
-    public function testGetPIDs()
+    public function testGetPIDs(): void
     {
         $this->getSimpleAdapter();
 
@@ -163,7 +167,7 @@ class ForkTest extends TestCase
     }
 
 
-    public function testGetPIDsAfterWait()
+    public function testGetPIDsAfterWait(): void
     {
         $this->getSimpleAdapter();
 
@@ -177,7 +181,7 @@ class ForkTest extends TestCase
     }
 
 
-    public function testWaitWithErrors()
+    public function testWaitWithErrors(): void
     {
         $adapter = $this->getMockAdapter();
 
@@ -198,7 +202,7 @@ class ForkTest extends TestCase
         $this->fork->wait();
     }
 
-    public function testMultipleWaits()
+    public function testMultipleWaits(): void
     {
         $duration = 10 ** 5;
 
@@ -223,7 +227,7 @@ class ForkTest extends TestCase
         );
     }
 
-    public function testSingleWaitForMultipleProcesses()
+    public function testSingleWaitForMultipleProcesses(): void
     {
         $duration = 10 ** 5;
 
@@ -254,7 +258,7 @@ class ForkTest extends TestCase
         );
     }
 
-    public function testProcessesThrowsExceptions()
+    public function testProcessesThrowsExceptions(): void
     {
         $throw = function ($text, $code) {
             throw new \RuntimeException($text, $code);
