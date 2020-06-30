@@ -42,7 +42,7 @@ class SharedMemoryTest extends TestCase
         $key1 = (new Intruder($memory1))->key;
         $key2 = (new Intruder($memory2))->key;
 
-        $this->assertGreaterThan($key1, $key2);
+        $this->assertNotSame($key1, $key2);
 
         $memory1->delete();
         $memory2->delete();
