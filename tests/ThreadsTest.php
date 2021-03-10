@@ -17,7 +17,7 @@ class ThreadsTest extends TestCase
     private $fork;
 
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         $this->fork = Mockery::mock(ForkInterface::class);
         $this->threads = new Threads(3, $this->fork);
