@@ -19,7 +19,7 @@ class ForkTest extends TestCase
     private $fork;
 
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         Mockery::close();
     }

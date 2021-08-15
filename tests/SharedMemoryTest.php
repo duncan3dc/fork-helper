@@ -11,7 +11,7 @@ class SharedMemoryTest extends TestCase
 {
     private $memory;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         error_reporting(\E_ALL);
 
@@ -20,7 +20,7 @@ class SharedMemoryTest extends TestCase
     }
 
 
-    public function tearDown(): void
+    protected function tearDown(): void
     {
         try {
             $this->memory->delete();
