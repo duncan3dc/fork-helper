@@ -12,7 +12,6 @@ jobs:
       fail-fast: false
       matrix:
         php:
-          - 7.3
           - 7.4
         composer:
           - ""
