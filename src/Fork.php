@@ -15,7 +15,7 @@ class Fork implements ForkInterface
     private $adapter;
 
     /**
-     * @var array $threads The threads created.
+     * @var array<int,int> $threads The threads created.
      */
     private $threads = [];
 

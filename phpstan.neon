@@ -1,6 +1,7 @@
 parameters:
 	ignoreErrors:
-		- '/Access to an undefined property duncan3dc\\ObjectIntruder\\Intruder::/'
+		- '/^Access to an undefined property duncan3dc\\ObjectIntruder\\Intruder::/'
+		- '/^Call to an undefined method duncan3dc\\ObjectIntruder\\Intruder::/'
 
 includes:
 	- vendor/phpstan/phpstan-mockery/extension.neon

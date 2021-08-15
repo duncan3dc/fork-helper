@@ -9,6 +9,7 @@ use PHPUnit\Framework\TestCase;
 
 class SharedMemoryTest extends TestCase
 {
+    /** @var Intruder */
     private $memory;
 
     protected function setUp(): void
