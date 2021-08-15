@@ -1,7 +1,13 @@
 parameters:
+	reportUnmatchedIgnoredErrors: false
 	ignoreErrors:
 		- '/^Access to an undefined property duncan3dc\\ObjectIntruder\\Intruder::/'
 		- '/^Call to an undefined method duncan3dc\\ObjectIntruder\\Intruder::/'
+		- '/expects Shmop, resource\|Shmop given\.$/'
+		- '/expects resource, resource\|Shmop given\.$/'
+		- '/^Method duncan3dc\\Forker\\SharedMemory::getMemory\(\) never returns resource so it can be removed from the return typehint\.$/'
+		- '/^Method duncan3dc\\Forker\\SharedMemory::getMemory\(\) never returns Shmop so it can be removed from the return typehint\.$/'
+		- '/has invalid (typehint )?type Shmop\.$/'
 
 includes:
 	- vendor/phpstan/phpstan-mockery/extension.neon

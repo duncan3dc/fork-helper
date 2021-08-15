@@ -38,7 +38,9 @@ class PcntlAdapterTest extends TestCase
             }
             $output .= $string;
             shmop_write($memory, $output, 0);
-            shmop_close($memory);
+            if (version_compare(PHP_VERSION, '8.0.0', '<')) {
+                shmop_close($memory);
+            }
         };
 
         $this->fork->call(function () use ($writeToMemory) {
@@ -64,7 +66,9 @@ class PcntlAdapterTest extends TestCase
         assert(!is_bool($memory));
         $output = trim(shmop_read($memory, 0, $memoryLimit));
         shmop_delete($memory);
-        shmop_close($memory);
+        if (version_compare(PHP_VERSION, '8.0.0', '<')) {
+            shmop_close($memory);
+        }
 
         $this->assertSame("func1.1\nfunc2.1\nwaiting\nfunc1.2\nfunc2.2\nend", $output);
     }

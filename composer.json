@@ -12,19 +12,19 @@
         "role": "Developer"
     }],
     "require": {
-        "php": "^7.4"
+        "php": "^7.4 || ^8.0"
     },
     "suggest": {
         "ext-pcntl": "Needed to allow multi-threaded execution of code",
         "ext-shmop": "If pcntl is present then shmop is required to handle errors"
     },
     "require-dev": {
-        "duncan3dc/object-intruder": "^0.3.0",
-        "mockery/mockery": "^1.2",
+        "duncan3dc/object-intruder": "^1.0",
+        "mockery/mockery": "^1.4",
         "phpstan/phpstan": "^0.12.94",
         "phpstan/phpstan-mockery": "^0.12.14",
         "phpstan/phpstan-phpunit": "^0.12.22",
-        "squizlabs/php_codesniffer": "^3.5",
+        "squizlabs/php_codesniffer": "^3.6",
         "phpunit/phpunit": "^8.4"
     },
     "autoload": {

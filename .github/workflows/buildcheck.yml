@@ -13,6 +13,7 @@ jobs:
       matrix:
         php:
           - 7.4
+          - 8.0
         composer:
           - ""
           - "--prefer-lowest"

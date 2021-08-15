@@ -31,14 +31,16 @@ final class SharedMemory
         # Initialise the memory
         $memory = $this->getMemory();
         shmop_write($memory, serialize([]), 0);
-        shmop_close($memory);
+        if (version_compare(PHP_VERSION, '8.0.0', '<')) {
+            shmop_close($memory);
+        }
     }
 
 
     /**
      * Get the shared memory segment.
      *
-     * @return resource
+     * @return \Shmop|resource
      */
     private function getMemory()
     {
@@ -55,7 +57,7 @@ final class SharedMemory
     /**
      * Get the exception details out of shared memory.
      *
-     * @param resource $memory The shmop resource from shmop_open()
+     * @param \Shmop|resource $memory The shmop resource from shmop_open()
      *
      * @return \Throwable[]
      */
@@ -91,7 +93,9 @@ final class SharedMemory
         $data = serialize($exceptions);
 
         shmop_write($memory, $data, 0);
-        shmop_close($memory);
+        if (version_compare(PHP_VERSION, '8.0.0', '<')) {
+            shmop_close($memory);
+        }
     }
 
 
@@ -108,7 +112,9 @@ final class SharedMemory
 
         shmop_write($memory, serialize([]), 0);
 
-        shmop_close($memory);
+        if (version_compare(PHP_VERSION, '8.0.0', '<')) {
+            shmop_close($memory);
+        }
 
         return $exceptions;
     }
@@ -124,7 +130,9 @@ final class SharedMemory
         $memory = shmop_open($this->key, "a", 0, 0);
         if ($memory) {
             shmop_delete($memory);
-            shmop_close($memory);
+            if (version_compare(PHP_VERSION, '8.0.0', '<')) {
+                shmop_close($memory);
+            }
         }
     }
 }
