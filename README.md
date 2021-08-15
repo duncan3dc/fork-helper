@@ -7,7 +7,7 @@ Full documentation is available at https://duncan3dc.github.io/fork-helper/
 PHPDoc API documentation is also available at [https://duncan3dc.github.io/fork-helper/api/](https://duncan3dc.github.io/fork-helper/api/namespaces/duncan3dc.Forker.html)  
 
 [![release](https://poser.pugx.org/duncan3dc/fork-helper/version.svg)](https://packagist.org/packages/duncan3dc/fork-helper)
-[![build](https://travis-ci.org/duncan3dc/fork-helper.svg?branch=master)](https://travis-ci.org/duncan3dc/fork-helper)
+[![build](https://github.com/duncan3dc/fork-helper/workflows/buildcheck/badge.svg?branch=master)](https://github.com/duncan3dc/fork-helper/actions?query=branch%3Amaster+workflow%3Abuildcheck)
 [![coverage](https://codecov.io/gh/duncan3dc/fork-helper/graph/badge.svg)](https://codecov.io/gh/duncan3dc/fork-helper)
 
 
