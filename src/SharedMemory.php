@@ -64,6 +64,7 @@ final class SharedMemory
     private function unserialize($memory): array
     {
         $data = shmop_read($memory, 0, self::LIMIT);
+        $data = rtrim($data);
 
         $exceptions = unserialize($data);
 
@@ -92,6 +93,7 @@ final class SharedMemory
 
         $data = serialize($exceptions);
 
+        shmop_write($memory, str_repeat("\0", self::LIMIT), 0);
         shmop_write($memory, $data, 0);
         if (version_compare(PHP_VERSION, '8.0.0', '<')) {
             shmop_close($memory);
@@ -110,6 +112,7 @@ final class SharedMemory
 
         $exceptions = $this->unserialize($memory);
 
+        shmop_write($memory, str_repeat("\0", self::LIMIT), 0);
         shmop_write($memory, serialize([]), 0);
 
         if (version_compare(PHP_VERSION, '8.0.0', '<')) {
