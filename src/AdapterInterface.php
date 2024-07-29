@@ -4,7 +4,6 @@ namespace duncan3dc\Forker;
 
 interface AdapterInterface
 {
-
     /**
      * Run some code in a thread.
      *
