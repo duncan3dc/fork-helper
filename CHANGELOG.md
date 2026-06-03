@@ -5,6 +5,18 @@ Changelog
 
 --------
 
+## 2.6.0 - 2026-06-03
+
+### Fixed
+
+* [SharedMemory] Fix duplicate memory allocation [#18](https://github.com/duncan3dc/fork-helper/pull/18).
+
+### Changed
+
+* [Support] Added support for PHP 8.4, and 8.5.
+
+--------
+
 ## 2.5.0 - 2024-07-29
 
 ### Changed
