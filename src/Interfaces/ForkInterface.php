@@ -26,11 +26,11 @@ interface ForkInterface
     /**
      * Wait for the processes started via call().
      *
-     * @param int $pid The pid to wait for, if none is passed then all threads created by this object will be waited for
+     * @param ?int $pid The pid to wait for, if none is passed then all threads created by this object will be waited for
      *
      * @return $this
      */
-    public function wait(int $pid = null): self;
+    public function wait(?int $pid = null): self;
 
     /**
      * Get the pids of any running processes.

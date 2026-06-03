@@ -23,9 +23,9 @@ class Fork implements ForkInterface
     /**
      * Create a container to run multiple threads.
      *
-     * @param AdapterInterface $adapter The adapter to use to handle the threading
+     * @param ?AdapterInterface $adapter The adapter to use to handle the threading
      */
-    public function __construct(AdapterInterface $adapter = null)
+    public function __construct(?AdapterInterface $adapter = null)
     {
         if ($adapter === null) {
             if (function_exists("pcntl_fork")) {
@@ -74,7 +74,7 @@ class Fork implements ForkInterface
     /**
      * @inheritdoc
      */
-    public function wait(int $pid = null): ForkInterface
+    public function wait(?int $pid = null): ForkInterface
     {
         if ($pid) {
             $threads = [$pid];

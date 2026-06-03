@@ -22,9 +22,9 @@ final class Threads implements ForkInterface
      * Create a container to run multiple threads.
      *
      * @param int $limit The maximum number of threads to use
-     * @param ForkInterface $fork
+     * @param ?ForkInterface $fork
      */
-    public function __construct(int $limit = 10, ForkInterface $fork = null)
+    public function __construct(int $limit = 10, ?ForkInterface $fork = null)
     {
         $this->limit = $limit;
 
@@ -62,7 +62,7 @@ final class Threads implements ForkInterface
     /**
      * @inheritdoc
      */
-    public function wait(int $pid = null): ForkInterface
+    public function wait(?int $pid = null): ForkInterface
     {
         $this->fork->wait($pid);
         return $this;
